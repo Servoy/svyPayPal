@@ -1,4 +1,40 @@
 /**
+ * @type {String}
+ * @private
+ * @properties={typeid:35,uuid:"BDA6C2B4-362B-44CE-AA02-CACBCF97868A"}
+ */
+var SOLUTION_NAME = 'modPayPal';
+/**
+ * @type {String}
+ * @properties={typeid:35,uuid:"7BDE6863-8786-454A-9A7C-0C051C933467"}
+ */
+var DEFAULT_REMOTE_USER_NAME = 'paypalRemoteDispatch';
+/**
+ * @type {String}
+ * @private 
+ * @properties={typeid:35,uuid:"CE14A4BC-0721-483D-80BF-119DDE013B17"}
+ */
+var DEFAULT_REMOTE_USER_PASSWORD = 'servoy';
+/**
+ * @type {String}
+ * @properties={typeid:35,uuid:"B9D3E003-4E8B-4F33-B43C-70C4A9A94D99"}
+ */
+var REMOTE_CLIENT_ID = '00000000-0000-0000-0000-REMOTEPAYPAL';
+
+/**
+ * @type {String}
+ * @private 
+ * @properties={typeid:35,uuid:"140D5059-67DA-4999-A765-2E08ECA532CA"}
+ */
+var remoteUserName = DEFAULT_REMOTE_USER_NAME = DEFAULT_REMOTE_USER_NAME;
+
+/**
+ * @type {String}
+ * @private 
+ * @properties={typeid:35,uuid:"BCD5E249-3418-4667-ABBE-6E6FC9F48A15"}
+ */
+var remoteUserPassword = DEFAULT_REMOTE_USER_PASSWORD = DEFAULT_REMOTE_USER_PASSWORD;
+/**
  * @type {Object}
  * @properties={typeid:35,uuid:"1F4583D6-B57C-405B-B60E-6E20D831F555",variableType:-4}
  */
@@ -299,12 +335,14 @@ function dispatchNVPRemote(url, params){
 	for(p in params){
 		req.addParameter(p,params[p]);
 	}
-	//	TODO: What to do when response code is not 200 ?
-	return req.executeRequest().getResponseBody();
+	var res = req.executeRequest();
+	var code = res.getStatusCode();
+	var body = res.getResponseBody();
+	if(code != plugins.http.HTTP_STATUS.SC_OK) throw new scopes.svyExceptions.HTTPException('Failed HTTP Request',null,null,code,body);
+	return body;
 }
 
 /**
- * FIXME:All strings should be in constants here
  * Create and/or get headless client instance used to queue requests
  * @private
  * @return {plugins.headlessclient.JSClient}
@@ -312,9 +350,19 @@ function dispatchNVPRemote(url, params){
  * @properties={typeid:24,uuid:"794A4FAF-4165-4759-AA50-7AA2E842415C"}
  */
 function getHeadlessClient(){
-	var un = 'paypal-dispatch-remote-user';
-	var pw = 'servoy';
-	return plugins.headlessclient.getOrCreateClient('C7C83E36-7B72-4659-8459-AA3181620071','modPayPal',un,pw,null);
+	var client = plugins.headlessclient.getClient(REMOTE_CLIENT_ID);
+	if(!client){
+		var uid = security.getUserUID(remoteUserName);
+		if(!uid || !security.checkPassword(uid,remoteUserPassword) || security.getUserGroups(uid).getMaxRowIndex() < 1)
+			throw new scopes.svyExceptions.IllegalStateException(
+			'Failed to authenticate remote dispatch user "'+remoteUserName+'" for PayPal Remote Dispatch Client. '+
+			'Ensure that the account exists and has correct credentials and is valid/belongs to a valid group. '+
+			'The remote dispatch user can be configured using scopes.modPayPal.setRemoteDispatchUser()');
+		client = plugins.headlessclient.getOrCreateClient(REMOTE_CLIENT_ID,SOLUTION_NAME,remoteUserName,remoteUserPassword,null);
+		if(!client) throw new scopes.svyExceptions.IllegalStateException('Failed to create headless client for PayPal Remote Dispatch. Check the server log for details');
+	}
+	if(!client.isValid()) throw new scopes.svyExceptions.IllegalStateException('PayPal Remote Dispatch Client exists, but is not valid');	
+	return client;
 }
 
 /**
@@ -323,10 +371,18 @@ function getHeadlessClient(){
  * @properties={typeid:24,uuid:"8CA1CCDB-D96C-4852-890B-15B3560CB5DD"}
  */
 function onDispatchResponse(event){
-	if (callback && event.getType() == JSClient.CALLBACK_EVENT) {
-		callback.apply(this,[new NVPResponse(event.data)]);
-	} else if (event.getType() == JSClient.CALLBACK_EXCEPTION_EVENT) {
-		//	TODO: What to do about failed requests (not error condition, but failed request)
-		application.output("exception callback, name: " + event.data);
-	}
+	if(!callback) return;
+	if(!event.data) throw new scopes.svyExceptions.IllegalStateException('PayPal Response could not be processed. See server logs for root cause.');
+	if(event.getType() != JSClient.CALLBACK_EVENT) throw new scopes.svyExceptions.IllegalStateException('PayPal request resulted in error condition: ' + event.data);
+	callback.apply(this,[new NVPResponse(event.data)]);
+}
+
+/**
+ * @param {String} userName
+ * @param {String} password
+ * @properties={typeid:24,uuid:"854E1695-D7EF-4447-8335-409B949C5137"}
+ */
+function setRemoteDispatchUser(userName,password){
+	var client = plugins.headlessclient.getClient(REMOTE_CLIENT_ID);
+	if(client) throw new scopes.svyExceptions.IllegalStateException('The remote client (Client ID:'+REMOTE_CLIENT_ID+') is already started. Shutdown the client first and try again');
 }
