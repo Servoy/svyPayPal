@@ -1,0 +1,11 @@
+addEmptyValue:1,
+customValues:"Visa|%%scopes.modPayPal.CREDIT_CARD_TYPES.VISA%%\r
+Mastercard|%%scopes.modPayPal.CREDIT_CARD_TYPES.MASTERCARD%%\r
+Discover|%%scopes.modPayPal.CREDIT_CARD_TYPES.DISCOVER%%\r
+AmEx|%%scopes.modPayPal.CREDIT_CARD_TYPES.AMEX%%\r
+Maestro|%%scopes.modPayPal.CREDIT_CARD_TYPES.MAESTRO%%",
+name:"PayPalCardTypes",
+returnDataProviders:1,
+showDataProviders:1,
+typeid:34,
+uuid:"75553F2B-1821-4860-8961-01EE04CCAB1E"

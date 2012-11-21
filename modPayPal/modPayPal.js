@@ -289,7 +289,7 @@ function NVPResponse(responseBody){
 	this.ack = '';
 	this.errorCode = '';
 	this.shortErrorMessage = '';
-	this.longErrorCode = '';
+	this.longErrorMessage = '';
 	
 	Object.defineProperty(this,'transactionID',{
 		get:function(){return params[NVP_RESPONSE_PARAMS.TRANSACTIONID]}
@@ -315,7 +315,7 @@ function NVPResponse(responseBody){
 	Object.defineProperty(this,'shortErrorMessage',{
 		get:function(){return params[NVP_RESPONSE_PARAMS.L_SHORTMESSAGE0]}
 	});
-	Object.defineProperty(this,'longErrorCode',{
+	Object.defineProperty(this,'longErrorMessage',{
 		get:function(){return params[NVP_RESPONSE_PARAMS.L_LONGMESSAGE0]}
 	});
 	this.toString = function(){
