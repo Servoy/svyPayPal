@@ -246,7 +246,7 @@ function NVPRequest(){
 	 * @param {Object} value
 	 */
 	this.setParameter = function(name,value){
-		if(!name) throw scopes.svyExceptions.IllegalArgumentException('Please specify a name',null,null);
+		if(!name) throw new scopes.svyExceptions.IllegalArgumentException('Please specify a name',null,null);
 		params[name] = value;
 	}
 	/**
@@ -255,7 +255,7 @@ function NVPRequest(){
 	 * @return {Object}
 	 */
 	this.getParameter = function(name){
-		if(!name) throw scopes.svyExceptions.IllegalArgumentException('Please specify a name',null,null);
+		if(!name) throw new scopes.svyExceptions.IllegalArgumentException('Please specify a name',null,null);
 		return params[name];
 	}
 	/**
