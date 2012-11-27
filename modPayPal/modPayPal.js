@@ -518,6 +518,7 @@ function onDispatchResponse(event){
 /**
  * Initializes a stateful PayPal client session with the required account information.
  * This method must be called before issuing any requests. I should be called once and only once, preferably on solution startup
+ * TODO: This should use the module init convention if/when it is moved to modUtils
  * 
  * @param {String} apiUser The PayPal API uSer
  * @param {String} apiPassword The PayPal Password
