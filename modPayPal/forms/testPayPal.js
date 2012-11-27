@@ -7,28 +7,20 @@
  */
 function testPayPal(event) {
 	
-	var req = new scopes.modPayPal.NVPRequest();
-	req.user = 'paypro_1351879757_biz_api1.servoy.com';
-	req.password = '1351879798';
-	req.signature= 'AQhmRD9Ow0.uJR-UkN9ai5Ks-.ZvAqc7h-T7OSm0h5HNdo8z80W9VTrs';
-	req.version = '56.0';
-	req.method = scopes.modPayPal.METHODS.DO_DIRECT_PAYMENT;
-	req.amount = '100';
-	req.paymentAction = scopes.modPayPal.PAYMENT_ACTIONS.SALE;
-	req.ipAddress = '192.168.0.1';
-	req.creditCardType = scopes.modPayPal.CREDIT_CARD_TYPES.VISA
-	req.account = '4147768078062740';
-	req.expirationDate = '102017';
-	req.cvv2 = '123';
-	req.firstName = 'SEAN';
-	req.lastName = 'DEVLIN';
-	req.street = '424 E IRVIN AVE';
-	req.city = 'STATE COLLEGE';
-	req.state = 'PA';
-	req.zip = '16801';
-	req.countryCode = 'US';
+	var amount = .99;
+	var creditCardType = scopes.modPayPal.CREDIT_CARD_TYPES.VISA
+	var account = '4147768078062740';
+	var expirationDate = '102017';
+	var cvv2 = '123';
+	var firstName = 'SEAN';
+	var lastName = 'DEVLIN';
+	var street = '424 E IRVIN AVE';
+	var city = 'STATE COLLEGE';
+	var state = 'PA';
+	var zip = '16801';
+	var countryCode = 'US';
 	
-	req.execute(scopes.modPayPal.NVP_END_POINTS.SANDBOX_SIGNATURES,callbackMethod);	
+	scopes.modPayPal.doDirectPayment(callbackMethod,amount,firstName,lastName,street,city,state,zip,countryCode,creditCardType,account,expirationDate,cvv2);
 }
 
 /**
@@ -38,4 +30,18 @@ function testPayPal(event) {
  */
 function callbackMethod(res){
 	plugins.dialogs.showInfoDialog('',res.toString());
+}
+/**
+ * Callback method for when form is shown.
+ *
+ * @param {Boolean} firstShow form is shown first time after load
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @private
+ *
+ * @properties={typeid:24,uuid:"6B8EF189-3D73-4C6D-9D1A-C2A218545F0F"}
+ */
+function onShow(firstShow, event) {
+	if(firstShow)
+		scopes.modPayPal.initialize('paypro_1351879757_biz_api1.servoy.com','1351879798','AQhmRD9Ow0.uJR-UkN9ai5Ks-.ZvAqc7h-T7OSm0h5HNdo8z80W9VTrs',scopes.modPayPal.NVP_END_POINTS.SANDBOX_SIGNATURES);
 }

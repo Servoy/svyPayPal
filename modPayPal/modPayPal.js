@@ -1,47 +1,62 @@
 /**
+ * The name of this solution, used when invoking headless client calls
  * @type {String}
  * @private
  * @properties={typeid:35,uuid:"BDA6C2B4-362B-44CE-AA02-CACBCF97868A"}
  */
 var SOLUTION_NAME = 'modPayPal';
+
 /**
+ * The default name of the user account for the headless client session which dispatches calls 
  * @type {String}
  * @properties={typeid:35,uuid:"7BDE6863-8786-454A-9A7C-0C051C933467"}
  */
 var DEFAULT_REMOTE_USER_NAME = 'paypalRemoteDispatch';
+
 /**
+ * The default password for the headless session to dispatch calls 
  * @type {String}
  * @private 
  * @properties={typeid:35,uuid:"CE14A4BC-0721-483D-80BF-119DDE013B17"}
  */
 var DEFAULT_REMOTE_USER_PASSWORD = 'servoy';
+
 /**
+ * The client ID for the headless session to dispatch calls
  * @type {String}
  * @properties={typeid:35,uuid:"B9D3E003-4E8B-4F33-B43C-70C4A9A94D99"}
  */
 var REMOTE_CLIENT_ID = '00000000-0000-0000-0000-REMOTEPAYPAL';
 
 /**
+ * The value for the user account used to log into the headless session for remote dispatch
  * @type {String}
  * @private 
+ * @see initialize method to override this value
  * @properties={typeid:35,uuid:"140D5059-67DA-4999-A765-2E08ECA532CA"}
  */
-var remoteUserName = DEFAULT_REMOTE_USER_NAME = DEFAULT_REMOTE_USER_NAME;
+var remoteUserName = DEFAULT_REMOTE_USER_NAME;
 
 /**
+ * The value for the user password used to log into the headless session for remote dispatch
  * @type {String}
  * @private 
+ * @see initialize method to override this value
  * @properties={typeid:35,uuid:"BCD5E249-3418-4667-ABBE-6E6FC9F48A15"}
  */
-var remoteUserPassword = DEFAULT_REMOTE_USER_PASSWORD = DEFAULT_REMOTE_USER_PASSWORD;
+var remoteUserPassword = DEFAULT_REMOTE_USER_PASSWORD;
+
 /**
+ * Supported values for the API parameter "METHOD"
  * @type {Object}
  * @properties={typeid:35,uuid:"1F4583D6-B57C-405B-B60E-6E20D831F555",variableType:-4}
  */
 var METHODS = {
 	DO_DIRECT_PAYMENT:'DoDirectPayment'
 };
+
 /**
+ * Supported values for the API parameter "PAYMENTACTION"
  * @type {Object}
  * @properties={typeid:35,uuid:"5D441665-35ED-4CBB-B7DF-774A8663F00E",variableType:-4}
  */
@@ -51,6 +66,8 @@ var PAYMENT_ACTIONS = {
 };
 
 /**
+ * Supported values for the API parameter "REFUND_FMF_DETAILS"
+ * @type {Object}
  * @properties={typeid:35,uuid:"009920EE-F46F-4F83-88F1-2725CB987809",variableType:-4}
  */
 var REFUND_FMF_DETAILS = {
@@ -59,6 +76,7 @@ var REFUND_FMF_DETAILS = {
 };
 
 /**
+ * Supported values for the API parameter "CREDITCARDTYPE"
  * @type {Object}
  * @properties={typeid:35,uuid:"0A8E1663-6952-4EF9-995C-80AE8F18A003",variableType:-4}
  */
@@ -69,14 +87,18 @@ var CREDIT_CARD_TYPES = {
 	AMEX:'Amex',
 	MAESTRO:'Maestro'
 };
+
 /**
+ * Supported values for the API response parameter "ACK"
  * @properties={typeid:35,uuid:"14499C91-D517-4AF0-A8D6-2AB85B446B98",variableType:-4}
  */
 var ACK_CODES = {
 	SUCCESS:'SUCCESS',
 	FAILURE:'FAILURE'
 };
+
 /**
+ * Supported values for API end points
  * @type {Object}
  * @properties={typeid:35,uuid:"C56505E6-BD32-4A83-8EC6-9508D33F91A7",variableType:-4}
  */
@@ -86,7 +108,9 @@ var NVP_END_POINTS = {
 	PRODUCTION_SIGNATURES:'https://api-3t.paypal.com/nvp',
 	PRODUCTION_CERTIFICATES:'https://api.paypal.com/nvp'
 };
+
 /**
+ * Names of all request parameters
  * @type {Object}
  * @properties={typeid:35,uuid:"2DAAACA3-1FEC-4A93-9D59-80B12F08842A",variableType:-4}
  */
@@ -113,6 +137,8 @@ var NVP_REQUEST_PARAMS = {
 };
 
 /**
+ * Names of all response parameters
+ * @type {Object}
  * @properties={typeid:35,uuid:"834A6298-45F0-4B97-B4F3-AD797DB9146E",variableType:-4}
  */
 var NVP_RESPONSE_PARAMS = {
@@ -128,6 +154,7 @@ var NVP_RESPONSE_PARAMS = {
 };
 
 /**
+ * Internal callback function used to handle headless client callbacks and delegates to user callbacks
  * @type {Function}
  * @private 
  * @properties={typeid:35,uuid:"37C7A104-545E-4B5A-B47A-B973C2637182",variableType:-4}
@@ -135,6 +162,43 @@ var NVP_RESPONSE_PARAMS = {
 var callback;
 
 /**
+ * The PayPal API user name for a stateful session
+ * @type {String}
+ * @private 
+ * @see initialize to set this value
+ * @properties={typeid:35,uuid:"1E91C258-8986-4210-89A3-1B4DBA0AA8A9"}
+ */
+var user = '';
+
+/**
+ * The PayPal API user password for a stateful session
+ * @type {String}
+ * @private 
+ * @see initialize to set this value
+ * @properties={typeid:35,uuid:"6C1560D9-0640-4FE8-BE35-61A1C0BBA7CE"}
+ */
+var password = '';
+
+/**
+ * The PayPal API signature string for a stateful session
+ * @type {String}
+ * @private 
+ * @see initialize to set this value
+ * @properties={typeid:35,uuid:"66F4B260-5000-4C9C-8ADB-DC2054B0328F"}
+ */
+var signature = '';
+
+/**
+ * The PayPal URL endpoint for a stateful session
+ * @type {String}
+ * @private 
+ * @properties={typeid:35,uuid:"5432A2B3-9E11-4218-9A2F-74BEDD0F4750"}
+ */
+var nvpEndPoint = '';
+
+/**
+ * This class wraps the parameters for a PayPal NVP (Name/Value Pair) API request
+ * All parameters can be set prior to calling the execute method, which returns a response object into an asynchronous callback method
  * @constructor 
  * @properties={typeid:24,uuid:"77AA328B-56DD-4A17-A4D9-C3539DA0F5B3"}
  */
@@ -241,35 +305,22 @@ function NVPRequest(){
 	
 
 	/**
-	 * Sets a request parameter. Use one of the NVP_REQUEST_PARAMS constants
-	 * @param {String} name
-	 * @param {Object} value
-	 */
-	this.setParameter = function(name,value){
-		if(!name) throw new scopes.svyExceptions.IllegalArgumentException('Please specify a name',null,null);
-		params[name] = value;
-	}
-	/**
-	 * Returns the value of a request parameter. Use one of the NVP_REQUEST_PARAMS constants
-	 * @param {String} name
-	 * @return {Object}
-	 */
-	this.getParameter = function(name){
-		if(!name) throw new scopes.svyExceptions.IllegalArgumentException('Please specify a name',null,null);
-		return params[name];
-	}
-	/**
-	 * @param {String} nvpEndPoint the target api/server for the request. One of the NVP_END_POINTS constants.
+	 * Executes the request for the specified target, with an optional callback handler for the response
+	 * @param {String} target the target api/server for the request. One of the NVP_END_POINTS constants.
 	 * @param {Function} [callbackMethod]
+	 * @see NVP_END_POINTS
+	 * @see NVPResponse
 	 */
-	this.execute = function(nvpEndPoint, callbackMethod){
+	this.execute = function(target, callbackMethod){
 		callback = callbackMethod;
 		getHeadlessClient().queueMethod(null,'scopes.modPayPal.dispatchNVPRemote',[nvpEndPoint,params],onDispatchResponse);
 	}
 }
 
 /**
- * @param {String} responseBody
+ * This class parses the parameters returned by a PayPal NVP request. If a request supplied a callback method, then a response object is passed into the handler when the server responds.
+ * @param {String} responseBody The HTTP response body to be parsed
+ * @see NVPRequest
  * @properties={typeid:24,uuid:"0227D9A9-BDCB-4728-8D15-078F92A8CD21"}
  */
 function NVPResponse(responseBody){
@@ -324,10 +375,89 @@ function NVPResponse(responseBody){
 }
 
 /**
- * Remote dispatch for all PayPal NVP requests 
- * @param {String} url
- * @param {Object} params
- * @return {String} responseBody
+ * A convenience method which executes a payment request using stateful information about the PayPal account holder
+ * This is the intended method to process most payments
+ * The asynchronous response is delegated to the callback parameter, into which a response object is passed
+ * @see scopes.modPayPal.NVPResponse
+ * 
+ * @param {Function} callbackMethod The handler for the response object
+ * @param {Number} amount The currency amount for the transaction
+ * @param {String} firstName The card holder's First name
+ * @param {String} lastName The card holder's Last name
+ * @param {String} street The card holder's Street Address
+ * @param {String} city The card holder's Sity
+ * @param {String} state The card holder's State
+ * @param {String} zip The card holder's Zip Code
+ * @param {String} countryCode The card holder's Country Code
+ * @param {String} creditCardType The credit card type
+ * @see scopes.modPayPal CREDIT_CARD_TYPES
+ * @param {String} account The Card Number
+ * @param {Date|String} expirationDate The Expiration date, which can be a data object, or a string with the format MMyyyy
+ * @param {String} [cvv2] The short security code for the card
+ * 
+ * @see initialize() to setup PayPal account information
+ * @throws {scopes.svyExceptions.IllegalStateException} When the PayPal account information is not initialized
+ * 
+ * @properties={typeid:24,uuid:"124D8AC3-1DA4-4C4D-B378-93E903396AC8"}
+ */
+function doDirectPayment(callbackMethod,amount,firstName,lastName,street,city,state,zip,countryCode,creditCardType,account,expirationDate,cvv2){
+	
+	if(!user) throw new scopes.svyExceptions.IllegalStateException('Pay Pal Account User is not initialized');
+	if(!password) throw new scopes.svyExceptions.IllegalStateException('Pay Pal Account Password is not initialized');
+	if(!signature) throw new scopes.svyExceptions.IllegalStateException('Pay Pal Account Signature is not initialized');
+	if(!nvpEndPoint) throw new scopes.svyExceptions.IllegalStateException('Pay Pal endpoint is not initialized');
+	
+	var requiredFields = {
+		callbackMethod:'Callback Method',
+		amount:'Amount',
+		firstName:'First Name',
+		lastName:'Last Name',
+		street:'Street',
+		city:'City',
+		state:'State',
+		zip:'Zip Code',
+		countryCode:'Country Code',
+		creditCardType:'Credit Card Type',
+		account:'Card Number',
+		expirationDate:'Expiration Date'
+	};
+	for(f in requiredFields){
+		if(!eval(f)) throw new scopes.svyExceptions.IllegalArgumentException('Missing required input for: ' + requiredFields[f]);
+	}
+	
+	var req = new scopes.modPayPal.NVPRequest();
+	req.user = user;
+	req.password = password;
+	req.signature= signature;
+	req.version = '56.0';	// TODO: Provide versioned support for APIs
+	req.method = scopes.modPayPal.METHODS.DO_DIRECT_PAYMENT;
+	req.ipAddress = application.getIPAddress();	// TODO: match internal IP patterns and replace with server IP when encountered
+	req.paymentAction = scopes.modPayPal.PAYMENT_ACTIONS.SALE;	// TODO: Support for Authorization call?
+	
+	req.firstName = firstName;
+	req.lastName = lastName;
+	req.street = street;
+	req.city = city;
+	req.state = state;
+	req.zip = zip;
+	req.countryCode = countryCode;
+	
+	req.amount = amount;
+	req.creditCardType = creditCardType;
+	req.account = account;
+	req.expirationDate = (expirationDate instanceof Date) ? utils.dateFormat(expirationDate,'MMyyyy') : expirationDate;
+	req.cvv2 = cvv2;
+	
+	req.execute(nvpEndPoint,callbackMethod);
+	
+}
+
+/**
+ * Remote dispatch for all PayPal NVP requests. This is queued server-side to dispatch all requests via HTTP 
+ * @param {String} url The target URL
+ * @param {Object} params An object containing name-value pairs for request parameters
+ * @return {String} responseBody The HTTP response body
+ * @private 
  * @properties={typeid:24,uuid:"3E77D68E-4B87-4794-85BB-03CACC4E713C"}
  */
 function dispatchNVPRemote(url, params){
@@ -344,7 +474,12 @@ function dispatchNVPRemote(url, params){
 
 /**
  * Create and/or get headless client instance used to queue requests
+ * Uses the user name and password variables for the headless session
  * @private
+ * @throws {scopes.svyExceptions.IllegalStateException} When the user cannot be logged into the solution
+ * @see remoteUserName
+ * @see remoteUserPassword
+ * 
  * @return {plugins.headlessclient.JSClient}
  *
  * @properties={typeid:24,uuid:"794A4FAF-4165-4759-AA50-7AA2E842415C"}
@@ -356,8 +491,7 @@ function getHeadlessClient(){
 		if(!uid || !security.checkPassword(uid,remoteUserPassword) || security.getUserGroups(uid).getMaxRowIndex() < 1)
 			throw new scopes.svyExceptions.IllegalStateException(
 			'Failed to authenticate remote dispatch user "'+remoteUserName+'" for PayPal Remote Dispatch Client. '+
-			'Ensure that the account exists and has correct credentials and is valid/belongs to a valid group. '+
-			'The remote dispatch user can be configured using scopes.modPayPal.setRemoteDispatchUser()');
+			'Ensure that the account exists and has correct credentials and is valid/belongs to a valid group.');
 		client = plugins.headlessclient.getOrCreateClient(REMOTE_CLIENT_ID,SOLUTION_NAME,remoteUserName,remoteUserPassword,null);
 		if(!client) throw new scopes.svyExceptions.IllegalStateException('Failed to create headless client for PayPal Remote Dispatch. Check the server log for details');
 	}
@@ -366,8 +500,12 @@ function getHeadlessClient(){
 }
 
 /**
+ * The internal handler for the asynchronous HTTP response returned from the headless request
+ * Delegates to the supplied callback method and supplies a new NVPReponse object
  * @param {JSEvent} event
  * @private
+ * @see callback
+ * @see NVPResponse
  * @properties={typeid:24,uuid:"8CA1CCDB-D96C-4852-890B-15B3560CB5DD"}
  */
 function onDispatchResponse(event){
@@ -378,11 +516,33 @@ function onDispatchResponse(event){
 }
 
 /**
- * @param {String} userName
- * @param {String} password
- * @properties={typeid:24,uuid:"854E1695-D7EF-4447-8335-409B949C5137"}
+ * Initializes a stateful PayPal client session with the required account information.
+ * This method must be called before issuing any requests. I should be called once and only once, preferably on solution startup
+ * 
+ * @param {String} apiUser The PayPal API uSer
+ * @param {String} apiPassword The PayPal Password
+ * @param {String} apiSignature The PayPal Signature
+ * @param {String} apiEndPoint The target, use NVP_END_POINTS constants
+ * @see NVP_END_POINTS
+ *
+ * @properties={typeid:24,uuid:"BCD08C32-2DBA-4496-ABC1-1C43931E849E"}
  */
-function setRemoteDispatchUser(userName,password){
-	var client = plugins.headlessclient.getClient(REMOTE_CLIENT_ID);
-	if(client) throw new scopes.svyExceptions.IllegalStateException('The remote client (Client ID:'+REMOTE_CLIENT_ID+') is already started. Shutdown the client first and try again');
+function initialize(apiUser,apiPassword,apiSignature,apiEndPoint){
+	if(!apiUser) throw new scopes.svyExceptions.IllegalArgumentException('Pay Pal Account User is required');
+	if(!apiPassword) throw new scopes.svyExceptions.IllegalArgumentException('Pay Pal Account Password is required');
+	if(!apiSignature) throw new scopes.svyExceptions.IllegalArgumentException('Pay Pal Account Signature is required');
+	if(!apiEndPoint) throw new scopes.svyExceptions.IllegalArgumentException('Pay Pal endpoint is required');
+	if(user || password || signature || nvpEndPoint) throw new scopes.svyExceptions.IllegalStateException('Session is already initialized');
+	var validEndpoint = false;
+	for(i in NVP_END_POINTS){
+		if(NVP_END_POINTS[i] == apiEndPoint){
+			validEndpoint = true;
+			break;
+		}
+	}
+	if(!validEndpoint) throw new scopes.svyExceptions.IllegalArgumentException('Invalid endpoint. Please use one of the constans provided through scopes.modPayPa.NVP_ENDPOINTS')
+	user = apiUser;
+	password = apiPassword;
+	signature = apiSignature;
+	nvpEndPoint = apiEndPoint;
 }
