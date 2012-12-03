@@ -319,6 +319,7 @@ function NVPRequest(){
 
 /**
  * This class parses the parameters returned by a PayPal NVP request. If a request supplied a callback method, then a response object is passed into the handler when the server responds.
+ * @constructor 
  * @param {String} responseBody The HTTP response body to be parsed
  * @see NVPRequest
  * @properties={typeid:24,uuid:"0227D9A9-BDCB-4728-8D15-078F92A8CD21"}
@@ -332,15 +333,42 @@ function NVPResponse(responseBody){
 		params[param[0]] = param[1];
 	}
 	
-	this.transactionID = '';
-	this.amount = 0;
-	this.avsCode = '';
-	this.cvv2Match = '';
-	this.paymentAdviceCode = '';
-	this.ack = '';
-	this.errorCode = '';
-	this.shortErrorMessage = '';
-	this.longErrorMessage = '';
+	/**
+	 * @type {String}
+	 */
+	this.transactionID = null;
+	/**
+	 * @type {Number}
+	 */
+	this.amount = null;
+	/**
+	 * @type {String}
+	 */
+	this.avsCode = null;
+	/**
+	 * @type {String}
+	 */
+	this.cvv2Match = null;
+	/**
+	 * @type {String}
+	 */
+	this.paymentAdviceCode = null;
+	/**
+	 * @type {String}
+	 */
+	this.ack = null;
+	/**
+	 * @type {String}
+	 */
+	this.errorCode = null;
+	/**
+	 * @type {String}
+	 */
+	this.shortErrorMessage = null;
+	/**
+	 * @type {String}
+	 */
+	this.longErrorMessage = null;
 	
 	Object.defineProperty(this,'transactionID',{
 		get:function(){return params[NVP_RESPONSE_PARAMS.TRANSACTIONID]}
@@ -385,7 +413,7 @@ function NVPResponse(responseBody){
  * @param {String} firstName The card holder's First name
  * @param {String} lastName The card holder's Last name
  * @param {String} street The card holder's Street Address
- * @param {String} city The card holder's Sity
+ * @param {String} city The card holder's City
  * @param {String} state The card holder's State
  * @param {String} zip The card holder's Zip Code
  * @param {String} countryCode The card holder's Country Code
