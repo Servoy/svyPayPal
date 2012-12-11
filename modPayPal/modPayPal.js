@@ -48,7 +48,7 @@ var remoteUserPassword = DEFAULT_REMOTE_USER_PASSWORD;
 
 /**
  * Supported values for the API parameter "METHOD"
- * @type {Object}
+ * @enum
  * @properties={typeid:35,uuid:"1F4583D6-B57C-405B-B60E-6E20D831F555",variableType:-4}
  */
 var METHODS = {
@@ -57,7 +57,7 @@ var METHODS = {
 
 /**
  * Supported values for the API parameter "PAYMENTACTION"
- * @type {Object}
+ * @enum
  * @properties={typeid:35,uuid:"5D441665-35ED-4CBB-B7DF-774A8663F00E",variableType:-4}
  */
 var PAYMENT_ACTIONS = {
@@ -67,7 +67,7 @@ var PAYMENT_ACTIONS = {
 
 /**
  * Supported values for the API parameter "REFUND_FMF_DETAILS"
- * @type {Object}
+ * @enum
  * @properties={typeid:35,uuid:"009920EE-F46F-4F83-88F1-2725CB987809",variableType:-4}
  */
 var REFUND_FMF_DETAILS = {
@@ -77,7 +77,7 @@ var REFUND_FMF_DETAILS = {
 
 /**
  * Supported values for the API parameter "CREDITCARDTYPE"
- * @type {Object}
+ * @enum
  * @properties={typeid:35,uuid:"0A8E1663-6952-4EF9-995C-80AE8F18A003",variableType:-4}
  */
 var CREDIT_CARD_TYPES = {
@@ -90,6 +90,7 @@ var CREDIT_CARD_TYPES = {
 
 /**
  * Supported values for the API response parameter "ACK"
+ * @enum
  * @properties={typeid:35,uuid:"14499C91-D517-4AF0-A8D6-2AB85B446B98",variableType:-4}
  */
 var ACK_CODES = {
@@ -99,7 +100,7 @@ var ACK_CODES = {
 
 /**
  * Supported values for API end points
- * @type {Object}
+ * @enum
  * @properties={typeid:35,uuid:"C56505E6-BD32-4A83-8EC6-9508D33F91A7",variableType:-4}
  */
 var NVP_END_POINTS = {
@@ -111,7 +112,7 @@ var NVP_END_POINTS = {
 
 /**
  * Names of all request parameters
- * @type {Object}
+ * @enum
  * @properties={typeid:35,uuid:"2DAAACA3-1FEC-4A93-9D59-80B12F08842A",variableType:-4}
  */
 var NVP_REQUEST_PARAMS = {
@@ -138,7 +139,7 @@ var NVP_REQUEST_PARAMS = {
 
 /**
  * Names of all response parameters
- * @type {Object}
+ * @enum
  * @properties={typeid:35,uuid:"834A6298-45F0-4B97-B4F3-AD797DB9146E",variableType:-4}
  */
 var NVP_RESPONSE_PARAMS = {
