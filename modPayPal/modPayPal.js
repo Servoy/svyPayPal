@@ -1,4 +1,32 @@
 /**
+ * This module provides a means to process payments through PayPal, by providing a wrapper API for the Name-Value-Pair (NVP) API offered by PayPal.
+ * @see https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/howto_api_overview
+ * 
+ * The API is supports two levels of interaction. A stateless, low-level interaction, in which the user may programmatically build and execute payment requests, and handle responses accordingly.
+ * Building on this, a stateful, high-level API is offered, in which a single method may be called to issue a payment processing request. 
+ * In both cases, requests are executed asynchronously from the server and responses are handled in a callback to the client. 
+ * 
+ * It is recommended to use the high-level API, which keeps certain PayPal credentials in memory, throughout the client session.
+ * The initialize() method method must be called prior to processing any payments. Here you will pass in the PayPal credentials and service end point.
+ * @see initialize
+ * 
+ * To process payments, use the doDirectPayment() method and pass in the required information, such as credit card number and billing address, etc.
+ * A callback method may be specified to handle the response
+ * @see doDirectPayment
+ * @see NVPResponse
+ * 
+ * NOTE: This module only supports the 'DIRECT PAYMENT' method of the PayPal NVP API. It does not (currently) support Credit Card authorizations.
+ * This method is a feature of the 'Payments Pro' offering from pay pal
+ * @see https://www.paypal.com/webapps/mpp/paypal-payments-pro 
+ * 
+ * NOTE: All payments are processed from Servoy's Headless Client API, and therefore use of this API consumes 1 additional License
+ * 
+ * NOTE: This API does not (currently) support multiple version of the PayPal API and is standardized on version 56
+ */
+
+
+
+/**
  * The name of this solution, used when invoking headless client calls
  * @type {String}
  * @private
@@ -207,24 +235,43 @@ function NVPRequest(){
 	
 	var params = {};
 
+	/** @type {String} */
 	this.user = '';
+	/** @type {String} */
 	this.password = '';
+	/** @type {String} */
 	this.signature = '';
+	/** @type {String} */
 	this.version = '';
+	/** @type {String} */
 	this.method = '';
+	/** @type {Number} */
 	this.amount = 0;
+	/** @type {String} */
 	this.paymentAction = '';
+	/** @type {String} */
 	this.ipAddress = '';
+	/** @type {String} */
 	this.creditCardType = '';
+	/** @type {String} */
 	this.account = '';
+	/** @type {String} */
 	this.expirationDate = '';
+	/** @type {String} */
 	this.cvv2 = '';
+	/** @type {String} */
 	this.firstName = '';
+	/** @type {String} */
 	this.lastName = '';
+	/** @type {String} */
 	this.street = '';
+	/** @type {String} */
 	this.city = '';
+	/** @type {String} */
 	this.state = '';
+	/** @type {String} */
 	this.zip = '';
+	/** @type {String} */
 	this.countryCode = '';
 
 	Object.defineProperty(this,'user',{
@@ -458,11 +505,11 @@ function doDirectPayment(callbackMethod,amount,firstName,lastName,street,city,st
 	req.user = user;
 	req.password = password;
 	req.signature= signature;
-	req.version = '56.0';	// TODO: Provide versioned support for APIs
+	req.version = '56.0';	// TODO: Provide versioned support for APIs, perhaps in the initialization
 	req.method = scopes.modPayPal.METHODS.DO_DIRECT_PAYMENT;
-	req.ipAddress = application.getIPAddress();	// TODO: match internal IP patterns and replace with server IP when encountered
+	req.ipAddress = application.getIPAddress();	// TODO: check if internal IP address and replace with server IP when encountered
 	req.paymentAction = scopes.modPayPal.PAYMENT_ACTIONS.SALE;	// TODO: Support for Authorization call?
-	
+
 	req.firstName = firstName;
 	req.lastName = lastName;
 	req.street = street;
@@ -547,7 +594,6 @@ function onDispatchResponse(event){
 /**
  * Initializes a stateful PayPal client session with the required account information.
  * This method must be called before issuing any requests. I should be called once and only once, preferably on solution startup
- * TODO: This should use the module init convention if/when it is moved to modUtils
  * 
  * @param {String} apiUser The PayPal API uSer
  * @param {String} apiPassword The PayPal Password
