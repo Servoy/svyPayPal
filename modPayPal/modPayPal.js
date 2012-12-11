@@ -25,7 +25,6 @@
  */
 
 
-
 /**
  * The name of this solution, used when invoking headless client calls
  * @type {String}
@@ -507,8 +506,12 @@ function doDirectPayment(callbackMethod,amount,firstName,lastName,street,city,st
 	req.signature= signature;
 	req.version = '56.0';	// TODO: Provide versioned support for APIs, perhaps in the initialization
 	req.method = scopes.modPayPal.METHODS.DO_DIRECT_PAYMENT;
-	req.ipAddress = application.getIPAddress();	// TODO: check if internal IP address and replace with server IP when encountered
-	req.paymentAction = scopes.modPayPal.PAYMENT_ACTIONS.SALE;	// TODO: Support for Authorization call?
+	var ipAddress = application.getIPAddress();
+	//	Paypal is only supporting ipv4
+	if(scopes.svyNet.getIPVersion(ipAddress) == scopes.svyNet.IPv4){
+		req.ipAddress = application.getIPAddress();
+	}
+	req.paymentAction = scopes.modPayPal.PAYMENT_ACTIONS.SALE;	
 
 	req.firstName = firstName;
 	req.lastName = lastName;
