@@ -508,7 +508,7 @@ function doDirectPayment(callbackMethod,amount,firstName,lastName,street,city,st
 	req.method = scopes.modPayPal.METHODS.DO_DIRECT_PAYMENT;
 	var ipAddress = application.getIPAddress();
 	//	Paypal is only supporting ipv4
-	if(scopes.svyNet.getIPVersion(ipAddress) == scopes.svyNet.IPv4){
+	if(scopes.svyNet.getIPVersion(ipAddress) == scopes.svyNet.IP_VERSIONS.IPv4){
 		req.ipAddress = application.getIPAddress();
 	}
 	req.paymentAction = scopes.modPayPal.PAYMENT_ACTIONS.SALE;	
