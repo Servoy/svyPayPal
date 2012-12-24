@@ -625,3 +625,40 @@ function initialize(apiUser,apiPassword,apiSignature,apiEndPoint){
 	signature = apiSignature;
 	nvpEndPoint = apiEndPoint;
 }
+
+/**
+ * Gets the Pay Pal User for the current session
+ * 
+ * @return {String}
+ * @properties={typeid:24,uuid:"FF483786-FDE3-4D7B-B56C-E35630743DF4"}
+ */
+function getUser(){
+	return user;
+}
+/**
+ * get the Pay Pal Password for the current Session
+ * 
+ * @return {String}
+ * @properties={typeid:24,uuid:"884C06B1-1FD2-4816-A72A-5BB2948522B7"}
+ */
+function getPassword(){
+	return password;
+}
+/**
+ * get the Pay Pal Signature for the current Session
+ * 
+ * @return {String}
+ * @properties={typeid:24,uuid:"28D3982D-8CA7-4D7D-87EC-83E644DEE8C4"}
+ */
+function getSignature(){
+	return signature;
+}
+/**
+ * Get the Pay Pal End Point for the current Session
+ * 
+ * @return {String}
+ * @properties={typeid:24,uuid:"A8C8CCF2-109E-488C-891F-180EA72755CE"}
+ */
+function getNVPEndpoint(){
+	return nvpEndPoint
+}
