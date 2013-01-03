@@ -471,16 +471,16 @@ function NVPResponse(responseBody){
  * @param {String} [cvv2] The short security code for the card
  * 
  * @see initialize() to setup PayPal account information
- * @throws {scopes.svyExceptions.IllegalStateException} When the PayPal account information is not initialized
+ * @throws {scopes.modUtils$exceptions.IllegalStateException} When the PayPal account information is not initialized
  * 
  * @properties={typeid:24,uuid:"124D8AC3-1DA4-4C4D-B378-93E903396AC8"}
  */
 function doDirectPayment(callbackMethod,amount,firstName,lastName,street,city,state,zip,countryCode,creditCardType,account,expirationDate,cvv2){
 	
-	if(!user) throw new scopes.svyExceptions.IllegalStateException('Pay Pal Account User is not initialized');
-	if(!password) throw new scopes.svyExceptions.IllegalStateException('Pay Pal Account Password is not initialized');
-	if(!signature) throw new scopes.svyExceptions.IllegalStateException('Pay Pal Account Signature is not initialized');
-	if(!nvpEndPoint) throw new scopes.svyExceptions.IllegalStateException('Pay Pal endpoint is not initialized');
+	if(!user) throw new scopes.modUtils$exceptions.IllegalStateException('Pay Pal Account User is not initialized');
+	if(!password) throw new scopes.modUtils$exceptions.IllegalStateException('Pay Pal Account Password is not initialized');
+	if(!signature) throw new scopes.modUtils$exceptions.IllegalStateException('Pay Pal Account Signature is not initialized');
+	if(!nvpEndPoint) throw new scopes.modUtils$exceptions.IllegalStateException('Pay Pal endpoint is not initialized');
 	
 	var requiredFields = {
 		callbackMethod:'Callback Method',
@@ -497,7 +497,7 @@ function doDirectPayment(callbackMethod,amount,firstName,lastName,street,city,st
 		expirationDate:'Expiration Date'
 	};
 	for(f in requiredFields){
-		if(!eval(f)) throw new scopes.svyExceptions.IllegalArgumentException('Missing required input for: ' + requiredFields[f]);
+		if(!eval(f)) throw new scopes.modUtils$exceptions.IllegalArgumentException('Missing required input for: ' + requiredFields[f]);
 	}
 	
 	var req = new scopes.modPayPal.NVPRequest();
@@ -547,7 +547,7 @@ function dispatchNVPRemote(url, params){
 	var res = req.executeRequest();
 	var code = res.getStatusCode();
 	var body = res.getResponseBody();
-	if(code != plugins.http.HTTP_STATUS.SC_OK) throw new scopes.svyExceptions.HTTPException('Failed HTTP Request',null,null,code,body);
+	if(code != plugins.http.HTTP_STATUS.SC_OK) throw new scopes.modUtils$exceptions.HTTPException('Failed HTTP Request',null,null,code,body);
 	return body;
 }
 
@@ -555,7 +555,7 @@ function dispatchNVPRemote(url, params){
  * Create and/or get headless client instance used to queue requests
  * Uses the user name and password variables for the headless session
  * @private
- * @throws {scopes.svyExceptions.IllegalStateException} When the user cannot be logged into the solution
+ * @throws {scopes.modUtils$exceptions.IllegalStateException} When the user cannot be logged into the solution
  * @see remoteUserName
  * @see remoteUserPassword
  * 
@@ -568,13 +568,13 @@ function getHeadlessClient(){
 	if(!client){
 		var uid = security.getUserUID(remoteUserName);
 		if(!uid || !security.checkPassword(uid,remoteUserPassword) || security.getUserGroups(uid).getMaxRowIndex() < 1)
-			throw new scopes.svyExceptions.IllegalStateException(
+			throw new scopes.modUtils$exceptions.IllegalStateException(
 			'Failed to authenticate remote dispatch user "'+remoteUserName+'" for PayPal Remote Dispatch Client. '+
 			'Ensure that the account exists and has correct credentials and is valid/belongs to a valid group.');
 		client = plugins.headlessclient.getOrCreateClient(REMOTE_CLIENT_ID,SOLUTION_NAME,remoteUserName,remoteUserPassword,null);
-		if(!client) throw new scopes.svyExceptions.IllegalStateException('Failed to create headless client for PayPal Remote Dispatch. Check the server log for details');
+		if(!client) throw new scopes.modUtils$exceptions.IllegalStateException('Failed to create headless client for PayPal Remote Dispatch. Check the server log for details');
 	}
-	if(!client.isValid()) throw new scopes.svyExceptions.IllegalStateException('PayPal Remote Dispatch Client exists, but is not valid');	
+	if(!client.isValid()) throw new scopes.modUtils$exceptions.IllegalStateException('PayPal Remote Dispatch Client exists, but is not valid');	
 	return client;
 }
 
@@ -589,8 +589,8 @@ function getHeadlessClient(){
  */
 function onDispatchResponse(event){
 	if(!callback) return;
-	if(!event.data) throw new scopes.svyExceptions.IllegalStateException('PayPal Response could not be processed. See server logs for root cause.');
-	if(event.getType() != JSClient.CALLBACK_EVENT) throw new scopes.svyExceptions.IllegalStateException('PayPal request resulted in error condition: ' + event.data);
+	if(!event.data) throw new scopes.modUtils$exceptions.IllegalStateException('PayPal Response could not be processed. See server logs for root cause.');
+	if(event.getType() != JSClient.CALLBACK_EVENT) throw new scopes.modUtils$exceptions.IllegalStateException('PayPal request resulted in error condition: ' + event.data);
 	callback.apply(this,[new NVPResponse(event.data)]);
 }
 
@@ -607,11 +607,11 @@ function onDispatchResponse(event){
  * @properties={typeid:24,uuid:"BCD08C32-2DBA-4496-ABC1-1C43931E849E"}
  */
 function initialize(apiUser,apiPassword,apiSignature,apiEndPoint){
-	if(!apiUser) throw new scopes.svyExceptions.IllegalArgumentException('Pay Pal Account User is required');
-	if(!apiPassword) throw new scopes.svyExceptions.IllegalArgumentException('Pay Pal Account Password is required');
-	if(!apiSignature) throw new scopes.svyExceptions.IllegalArgumentException('Pay Pal Account Signature is required');
-	if(!apiEndPoint) throw new scopes.svyExceptions.IllegalArgumentException('Pay Pal endpoint is required');
-	if(user || password || signature || nvpEndPoint) throw new scopes.svyExceptions.IllegalStateException('Session is already initialized');
+	if(!apiUser) throw new scopes.modUtils$exceptions.IllegalArgumentException('Pay Pal Account User is required');
+	if(!apiPassword) throw new scopes.modUtils$exceptions.IllegalArgumentException('Pay Pal Account Password is required');
+	if(!apiSignature) throw new scopes.modUtils$exceptions.IllegalArgumentException('Pay Pal Account Signature is required');
+	if(!apiEndPoint) throw new scopes.modUtils$exceptions.IllegalArgumentException('Pay Pal endpoint is required');
+	if(user || password || signature || nvpEndPoint) throw new scopes.modUtils$exceptions.IllegalStateException('Session is already initialized');
 	var validEndpoint = false;
 	for(i in NVP_END_POINTS){
 		if(NVP_END_POINTS[i] == apiEndPoint){
@@ -619,7 +619,7 @@ function initialize(apiUser,apiPassword,apiSignature,apiEndPoint){
 			break;
 		}
 	}
-	if(!validEndpoint) throw new scopes.svyExceptions.IllegalArgumentException('Invalid endpoint. Please use one of the constans provided through scopes.modPayPa.NVP_ENDPOINTS')
+	if(!validEndpoint) throw new scopes.modUtils$exceptions.IllegalArgumentException('Invalid endpoint. Please use one of the constans provided through scopes.modPayPa.NVP_ENDPOINTS')
 	user = apiUser;
 	password = apiPassword;
 	signature = apiSignature;
