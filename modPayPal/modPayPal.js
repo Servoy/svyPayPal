@@ -453,7 +453,7 @@ function NVPResponse(responseBody){
  * A convenience method which executes a payment request using stateful information about the PayPal account holder
  * This is the intended method to process most payments
  * The asynchronous response is delegated to the callback parameter, into which a response object is passed
- * @see scopes.modPayPal.NVPResponse
+ * @see NVPResponse
  * 
  * @param {Function} callbackMethod The handler for the response object
  * @param {Number} amount The currency amount for the transaction
@@ -500,18 +500,18 @@ function doDirectPayment(callbackMethod,amount,firstName,lastName,street,city,st
 		if(!eval(f)) throw new scopes.modUtils$exceptions.IllegalArgumentException('Missing required input for: ' + requiredFields[f]);
 	}
 	
-	var req = new scopes.modPayPal.NVPRequest();
+	var req = new NVPRequest();
 	req.user = user;
 	req.password = password;
 	req.signature= signature;
 	req.version = '56.0';	// TODO: Provide versioned support for APIs, perhaps in the initialization
-	req.method = scopes.modPayPal.METHODS.DO_DIRECT_PAYMENT;
+	req.method = METHODS.DO_DIRECT_PAYMENT;
 	var ipAddress = application.getIPAddress();
 	//	Paypal is only supporting ipv4
 	if(scopes.modUtils$net.getIPVersion(ipAddress) == scopes.modUtils$net.IP_VERSIONS.IPv4){
 		req.ipAddress = application.getIPAddress();
 	}
-	req.paymentAction = scopes.modPayPal.PAYMENT_ACTIONS.SALE;	
+	req.paymentAction = PAYMENT_ACTIONS.SALE;	
 
 	req.firstName = firstName;
 	req.lastName = lastName;
