@@ -547,7 +547,7 @@ function dispatchNVPRemote(url, params){
 	var res = req.executeRequest();
 	var code = res.getStatusCode();
 	var body = res.getResponseBody();
-	if(code != plugins.http.HTTP_STATUS.SC_OK) throw new scopes.modUtils$exceptions.HTTPException('Failed HTTP Request', code, body);
+	if(code != plugins.http.HTTP_STATUS.SC_OK) throw new scopes.modUtils$net.HTTPException('Failed HTTP Request', code, body);
 	return body;
 }
 
