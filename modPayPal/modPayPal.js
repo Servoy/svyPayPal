@@ -636,7 +636,7 @@ function doDirectPayment(callbackMethod, amount, firstName, lastName, street, ci
 	req.method = METHODS.DO_DIRECT_PAYMENT;
 	var ipAddress = application.getIPAddress();
 	//	Paypal is only supporting ipv4
-	if (scopes.modUtils$net.getIPVersion(ipAddress) == scopes.modUtils$net.IP_VERSIONS.IPv4) {
+	if (scopes.svyNet.getIPVersion(ipAddress) == scopes.svyNet.IP_VERSIONS.IPv4) {
 		req.ipAddress = application.getIPAddress();
 	}
 	req.paymentAction = PAYMENT_ACTIONS.SALE;
@@ -683,7 +683,7 @@ function dispatchNVPRemote(url, params) {
 	var res = req.executeRequest();
 	var code = res.getStatusCode();
 	var body = res.getResponseBody();
-	if (code != plugins.http.HTTP_STATUS.SC_OK) throw new scopes.modUtils$net.HTTPException('Failed HTTP Request', code, body);
+	if (code != plugins.http.HTTP_STATUS.SC_OK) throw new scopes.svyNet.HTTPException('Failed HTTP Request', code, body);
 	return body;
 }
 
