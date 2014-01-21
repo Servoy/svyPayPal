@@ -30,7 +30,7 @@
  * @private
  * @properties={typeid:35,uuid:"BDA6C2B4-362B-44CE-AA02-CACBCF97868A"}
  */
-var SOLUTION_NAME = 'modPayPal';
+var SOLUTION_NAME = 'svyPayPal';
 
 /**
  * The default name of the user account for the headless client session which dispatches calls
@@ -471,7 +471,7 @@ function NVPRequest() {
 	 */
 	this.execute = function(target, callbackMethod) {
 		callback = callbackMethod;
-		getHeadlessClient().queueMethod(null, 'scopes.modPayPal.dispatchNVPRemote', [nvpEndPoint, params], onDispatchResponse);
+		getHeadlessClient().queueMethod(null, 'scopes.svyPayPal.dispatchNVPRemote', [nvpEndPoint, params], onDispatchResponse);
 	}
 }
 
@@ -594,7 +594,7 @@ function NVPResponse(responseBody) {
  * @param {String} zip The card holder's Zip Code
  * @param {String} countryCode The card holder's Country Code
  * @param {String} creditCardType The credit card type
- * @see scopes.modPayPal CREDIT_CARD_TYPES
+ * @see scopes.svyPayPal CREDIT_CARD_TYPES
  * @param {String} account The Card Number
  * @param {Date|String} expirationDate The Expiration date, which can be a data object, or a string with the format MMyyyy
  * @param {String} [cvv2] The short security code for the card

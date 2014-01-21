@@ -24,7 +24,7 @@ var PAY_PAL_SIGNATURE = 'AQhmRD9Ow0.uJR-UkN9ai5Ks-.ZvAqc7h-T7OSm0h5HNdo8z80W9VTr
 function testDoPayment() {
 	
 	var amount = .10;
-	var creditCardType = scopes.modPayPal.CREDIT_CARD_TYPES.VISA;
+	var creditCardType = scopes.svyPayPal.CREDIT_CARD_TYPES.VISA;
 	var account = '4147768078062740';
 	var expirationDate = '102017';
 	var cvv2 = '123';
@@ -36,16 +36,16 @@ function testDoPayment() {
 	var zip = '16801';
 	var countryCode = 'US';
 	
-	scopes.modPayPal.doDirectPayment(onPaymentCallback,amount,firstName,lastName,street,city,state,zip,countryCode,creditCardType,account,expirationDate,cvv2);
+	scopes.svyPayPal.doDirectPayment(onPaymentCallback,amount,firstName,lastName,street,city,state,zip,countryCode,creditCardType,account,expirationDate,cvv2);
 }
 
 /**
- * @param {scopes.modPayPal.NVPResponse} res
+ * @param {scopes.svyPayPal.NVPResponse} res
  *
  * @properties={typeid:24,uuid:"9FD4C5DD-9C12-4798-AB9E-F3BE992E9B1A"}
  */
 function onPaymentCallback(res){
-	jsunit.assertTrue(res.ack == scopes.modPayPal.ACK_CODES.SUCCESS || res.ack == scopes.modPayPal.ACK_CODES.FAILURE);
+	jsunit.assertTrue(res.ack == scopes.svyPayPal.ACK_CODES.SUCCESS || res.ack == scopes.svyPayPal.ACK_CODES.FAILURE);
 }
 
 /**
@@ -53,19 +53,19 @@ function onPaymentCallback(res){
  * @properties={typeid:24,uuid:"1A673770-1B19-4432-975F-E713F2A98801"}
  */
 function testInitialize() {
-	jsunit.assertEquals(scopes.modPayPal.getUser(),PAY_PAL_USER);
-	jsunit.assertEquals(scopes.modPayPal.getPassword(),PAY_PAL_PASSWORD);
-	jsunit.assertEquals(scopes.modPayPal.getSignature(),PAY_PAL_SIGNATURE);
-	jsunit.assertEquals(scopes.modPayPal.getNVPEndpoint(),scopes.modPayPal.NVP_END_POINTS.SANDBOX_SIGNATURES);
+	jsunit.assertEquals(scopes.svyPayPal.getUser(),PAY_PAL_USER);
+	jsunit.assertEquals(scopes.svyPayPal.getPassword(),PAY_PAL_PASSWORD);
+	jsunit.assertEquals(scopes.svyPayPal.getSignature(),PAY_PAL_SIGNATURE);
+	jsunit.assertEquals(scopes.svyPayPal.getNVPEndpoint(),scopes.svyPayPal.NVP_END_POINTS.SANDBOX_SIGNATURES);
 }
 
 /**
  * @properties={typeid:24,uuid:"1233CB1B-0F49-4D0B-B184-9229961E2E58"}
  */
 function testNVPRequest(){
-	var req = new scopes.modPayPal.NVPRequest();
+	var req = new scopes.svyPayPal.NVPRequest();
 	req.amount = .10;
-	req.creditCardType = scopes.modPayPal.CREDIT_CARD_TYPES.VISA;
+	req.creditCardType = scopes.svyPayPal.CREDIT_CARD_TYPES.VISA;
 	req.account = '4147768078062740';
 	req.expirationDate = '102017';
 	req.cvv2 = '123';
@@ -76,7 +76,7 @@ function testNVPRequest(){
 	req.state = 'PA';
 	req.zip = '16801';
 	req.countryCode = 'US';
-	req.execute(scopes.modPayPal.NVP_END_POINTS.SANDBOX_SIGNATURES,onPaymentCallback);
+	req.execute(scopes.svyPayPal.NVP_END_POINTS.SANDBOX_SIGNATURES,onPaymentCallback);
 }
 
 /**
@@ -85,5 +85,5 @@ function testNVPRequest(){
  * @properties={typeid:24,uuid:"8E2DD91B-BED5-4E10-A72E-DA7BCFCC8083"}
  */
 function setup() {
-	scopes.modPayPal.initialize(PAY_PAL_USER,PAY_PAL_PASSWORD,PAY_PAL_SIGNATURE,scopes.modPayPal.NVP_END_POINTS.SANDBOX_SIGNATURES);
+	scopes.svyPayPal.initialize(PAY_PAL_USER,PAY_PAL_PASSWORD,PAY_PAL_SIGNATURE,scopes.svyPayPal.NVP_END_POINTS.SANDBOX_SIGNATURES);
 }
