@@ -4,8 +4,7 @@ Mastercard\r
 Discover\r
 AmEx\r
 Maestro",
+encapsulation:2,
 name:"PayPalCardTypes",
-returnDataProviders:1,
-showDataProviders:1,
 typeid:34,
 uuid:"75553F2B-1821-4860-8961-01EE04CCAB1E"
