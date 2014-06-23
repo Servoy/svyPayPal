@@ -44,15 +44,16 @@
 	</target>
 	-->
 	
+	<target name="instrument_code">
+	  <exec executable="cmd">
+		<arg line="/c mkdir ${WORKSPACE}/istanbul_test"/>
+	  </exec>
+	</target>
 	
 	<!-- Instrument all code in workspace -->
 	<target name="instrument_code">
 	  <exec executable="cmd">
-		<arg value="istanbul"/>
-		<arg value="instrument"/>
-		<arg value="${WORKSPACE}"/>
-		<arg value="${--output}"/>
-		<arg value="${WORKSPACE}/istanbul"/>
+		<arg line="/c istanbul instrument ${WORKSPACE} --output ${INSTRUMENTED_WORKSPACE}"/>
 	  </exec>
 	</target>
 	
