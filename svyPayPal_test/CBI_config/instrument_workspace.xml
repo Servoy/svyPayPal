@@ -20,12 +20,12 @@
 	<target name="instrument_workspace" depends="clean_instrumented_workspace">
 	  <echo level="info" message="istanbul ${WORKSPACE} --output ${INSTRUMENTED_WORKSPACE}"/>
 	  <exec executable="cmd">
-	    <arg param="/c"/>
-	    <arg param="istanbul"/>
-	    <arg param="instrument"/>
-	    <arg param="${WORKSPACE}"/>
-	    <arg param="--output"/>
-	    <arg param="${INSTRUMENTED_WORKSPACE}"/>		
+	    <arg value="/c"/>
+	    <arg value="istanbul"/>
+	    <arg value="instrument"/>
+	    <arg value="${WORKSPACE}"/>
+	    <arg value="--output"/>
+	    <arg value="${INSTRUMENTED_WORKSPACE}"/>		
 	  </exec>
 	</target>
 	
