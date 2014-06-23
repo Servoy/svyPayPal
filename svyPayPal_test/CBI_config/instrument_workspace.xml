@@ -36,9 +36,13 @@
 	-->
 	
 	<target name="test_create_dir">
+	  <mkdir dir="${INSTRUMENTED_WORKSPACE}"/>
+	  <mkdir dir="${WORKSPACE}/istanbul_test"/>
+	  <!--
 	  <exec executable="cmd">
 		<arg line="/c mkdir ${WORKSPACE}/istanbul_test"/>
 	  </exec>
+	  -->
 	</target>
 	
 	<!-- Instrument all code in workspace -->
