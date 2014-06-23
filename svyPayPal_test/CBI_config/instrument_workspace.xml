@@ -25,7 +25,7 @@
 	  <exec executable="cmd">
 		<arg line="/c istanbul instrument ${WORKSPACE} --output ${INSTRUMENTED_WORKSPACE}"/>
 	  </exec>
-	  <echo message="re-execute istanbul">
+	  <echo message="re-execute istanbul"/>
 	</target>
 	
 </project>
