@@ -6,51 +6,21 @@
     <property file="export_and_test_personal.properties"/>
     <property file="export_and_test.properties"/>
 
-	<echo message="Hello, istanbul"/>
-	<echo>${WORKSPACE}</echo>
-	<echo>${INSTRUMENTED_WORKSPACE}</echo>
-	
-	<target name="instrument_code" depends= "test_create_dir, instrument_workspace"/>
-	
-	<target name="remove_instrumented_directory">
-	  <exec executable="cmd">
-		<arg value="rd"/>
-		<arg value="${INSTRUMENTED_WORKSPACE}"/>
-		<arg value="/S"/>
-		<arg value="/Q"/>
-	  </exec>
-	</target>
-	
-	<target name="create_instrumented_directrory">
-	  <exec executable="cmd">
-		<arg value="mkdir"/>
-		<arg value="${INSTRUMENTED_WORKSPACE}"/>
-	  </exec>
-	</target>
-	
-	<!--
-	<target name="copy_workspace_into_instrumented_directrory">
-	  <exec executable="cmd">
-		<arg value="mkdir"/>
-		<arg value="${INSTRUMENTED_WORKSPACE}"/>
-	  </exec>
-	</target>
-	-->
-	
-	<target name="test_create_dir">
+	<target name="instrument_code" depends= "clean_instrumented_workspace, instrument_workspace"/>
+
+	<!-- clean the instrumented workspace -->
+	<target name="clean_instrumented_workspace">
+	  <echo message="clean instrumented workspace"/>
+	  <delete dir="${INSTRUMENTED_WORKSPACE}"/>
 	  <mkdir dir="${INSTRUMENTED_WORKSPACE}"/>
 	  <mkdir dir="${WORKSPACE}/istanbul_test"/>
-	  <!--
-	  <exec executable="cmd">
-		<arg line="/c mkdir ${WORKSPACE}/istanbul_test"/>
-	  </exec>
-	  -->
 	</target>
 	
-	<!-- Instrument all code in workspace -->
-	<target name="instrument_workspace" depends="test_create_dir">
+	<!-- instrument all code from workspace into the instrumented workspace-->
+	<target name="instrument_workspace" depends="clean_instrumented_workspace">
+	  <echo>${INSTRUMENTED_WORKSPACE}</echo>
 	  <exec executable="cmd">
-		<arg line="/c istanbul instrument ${WORKSPACE} --output ${INSTRUMENTED_WORKSPACE}"/>
+		<arg line="istanbul instrument ${WORKSPACE} --output ${INSTRUMENTED_WORKSPACE}"/>
 	  </exec>
 	</target>
 	
