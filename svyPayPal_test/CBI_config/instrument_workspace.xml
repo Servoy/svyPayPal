@@ -19,7 +19,7 @@
 	<!-- instrument all code from workspace into the instrumented workspace-->
 	<target name="instrument_workspace" depends="clean_instrumented_workspace">
 	  <exec executable="cmd">
-		<arg line="npm install -g istanbul"/>
+		<arg line="/c npm install -g istanbul"/>
 	  </exec>
 	  <echo level="info" message="istanbul ${WORKSPACE} --output ${INSTRUMENTED_WORKSPACE}"/>
 	  <exec executable="cmd">
