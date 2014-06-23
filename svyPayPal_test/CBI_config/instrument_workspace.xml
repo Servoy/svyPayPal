@@ -10,15 +10,6 @@
 	<echo>${WORKSPACE}</echo>
 	<echo>${INSTRUMENTED_WORKSPACE}</echo>
 	
-	<target name="remove instrument directory">
-	  <exec executable="cmd">
-		<arg value="rd"/>
-		<arg value="${INSTRUMENTED_WORKSPACE}"/>
-		<arg value="/S"/>
-		<arg value="/Q"/>
-	  </exec>
-	</target>
-	
 	<target name="remove_instrumented_directory">
 	  <exec executable="cmd">
 		<arg value="rd"/>
@@ -44,7 +35,7 @@
 	</target>
 	-->
 	
-	<target name="instrument_code">
+	<target name="test_create_dir">
 	  <exec executable="cmd">
 		<arg line="/c mkdir ${WORKSPACE}/istanbul_test"/>
 	  </exec>
