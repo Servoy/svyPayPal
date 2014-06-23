@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<!-- Works with Ant 1.7.0 and higher -->
+<project basedir=".">
+
+    <property file="export_and_test_personal.properties"/>
+    <property file="export_and_test.properties"/>
+
+	<echo message="Hello, istanbul"/>
+	<echo>${WORKSPACE}</echo>
+	<echo>${INSTRUMENTED_WORKSPACE}</echo>
+	
+	<target name="remove instrument directory">
+	  <exec executable="cmd">
+		<arg value="rd"/>
+		<arg value="${INSTRUMENTED_WORKSPACE}"/>
+		<arg value="/S"/>
+		<arg value="/Q"/>
+	  </exec>
+	</target>
+	
+	<target name="remove_instrumented_directory">
+	  <exec executable="cmd">
+		<arg value="rd"/>
+		<arg value="${INSTRUMENTED_WORKSPACE}"/>
+		<arg value="/S"/>
+		<arg value="/Q"/>
+	  </exec>
+	</target>
+	
+	<target name="create_instrumented_directrory">
+	  <exec executable="cmd">
+		<arg value="mkdir"/>
+		<arg value="${INSTRUMENTED_WORKSPACE}"/>
+	  </exec>
+	</target>
+	
+	<!--
+	<target name="copy_workspace_into_instrumented_directrory">
+	  <exec executable="cmd">
+		<arg value="mkdir"/>
+		<arg value="${INSTRUMENTED_WORKSPACE}"/>
+	  </exec>
+	</target>
+	-->
+	
+	
+	<!-- Instrument all code in workspace -->
+	<target name="instrument_code">
+	  <exec executable="cmd">
+		<arg value="istanbul"/>
+		<arg value="instrument"/>
+		<arg value="${WORKSPACE}"/>
+		<arg value="${--output}"/>
+		<arg value="${WORKSPACE}/istanbul"/>
+	  </exec>
+	</target>
+	
+</project>

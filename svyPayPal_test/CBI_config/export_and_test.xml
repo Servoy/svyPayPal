@@ -6,25 +6,6 @@
     <property file="export_and_test_personal.properties"/>
     <property file="export_and_test.properties"/>
 
-	<echo message="Hello, istanbul"/>
-	<echo>${WORKSPACE}</echo>
-	<target name="mkdir">
-	  <exec executable="cmd">
-		<arg value="mkdir"/>
-		<arg value="${WORKSPACE}/istanbul"/>
-	  </exec>
-	</target>
-	<target name="instrument_code">
-	  <exec executable="cmd">
-		<arg value="istanbul"/>
-		<arg value="instrument"/>
-		<arg value="${WORKSPACE}"/>
-		<arg value="${--output}"/>
-		<arg value="${WORKSPACE}/istanbul"/>
-	  </exec>
-	</target>
-	
-	
     <!-- this macro is almost identical to the sample export solution target from [developer.dir]/exporter -->
     <macrodef name="export-solution">
         <attribute name="solutionNames"/>
