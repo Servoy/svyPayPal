@@ -8,7 +8,8 @@
         <pathelement location="${ANT_CONTRIB_JAR}"/>
       </classpath>
     </taskdef>
-        
+       
+	<!-- TODO: import file to instrument the code -->
     <import file="export_and_test.xml"/>
 
     <!-- Cleans the workspace preparing for a new build        -->
