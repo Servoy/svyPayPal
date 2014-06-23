@@ -6,6 +6,8 @@
     <property file="export_and_test_personal.properties"/>
     <property file="export_and_test.properties"/>
 
+	<echo message="Hello, istanbul"/>
+	<echo>${WORKSPACE}</echo>
 	<target name="help">
 	  <exec executable="cmd">
 		<arg value="istanbul"/>
