@@ -8,7 +8,7 @@
 
 	<echo message="Hello, istanbul"/>
 	<echo>${WORKSPACE}</echo>
-	<target name="instrument_code">
+	<target name="mkdir">
 	  <exec executable="cmd">
 		<arg value="mkdir"/>
 		<arg value="${WORKSPACE}/istanbul"/>
