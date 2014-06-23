@@ -10,6 +10,8 @@
 	<echo>${WORKSPACE}</echo>
 	<echo>${INSTRUMENTED_WORKSPACE}</echo>
 	
+	<target name="instrument_code" depends= "test_create_dir, instrument_workspace"/>
+	
 	<target name="remove_instrumented_directory">
 	  <exec executable="cmd">
 		<arg value="rd"/>
@@ -46,7 +48,7 @@
 	</target>
 	
 	<!-- Instrument all code in workspace -->
-	<target name="instrument_code">
+	<target name="instrument_workspace" depends="test_create_dir">
 	  <exec executable="cmd">
 		<arg line="/c istanbul instrument ${WORKSPACE} --output ${INSTRUMENTED_WORKSPACE}"/>
 	  </exec>
