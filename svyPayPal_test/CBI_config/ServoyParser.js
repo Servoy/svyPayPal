@@ -43,9 +43,14 @@ function getFilesRecursiveSync(dir, fileList, optionalFilterFunction) {
     }
     var files = fs.readdirSync(dir);
     for (var i in files) {
-        if (!files.hasOwnProperty(i)) continue;
+        if (!files.hasOwnProperty(i)) {
+			continue;
+		}
         var filePath = dir + '/' + files[i];
         if (fs.statSync(filePath).isDirectory()) {		// search files in directory
+		    if (filePath.substring(filePath.length-5, filePath.length) == '_test') {	// skip _test directories
+				continue;
+			}
             getFilesRecursiveSync(filePath, fileList, optionalFilterFunction);
         } else if (fs.statSync(filePath).isFile()) {		
             if (optionalFilterFunction && optionalFilterFunction(filePath) !== true)	// filter .js files only
@@ -76,11 +81,11 @@ function readWorkspaceJSFileList() {
 		
 		// TODO bad performance. read all file in once.
 		// copy the content into a different file.
-		fs.readFile(inFilePath, 'utf8', function (err, data) {
+		fs.readFileSync(inFilePath, 'utf8', function (err, data) {
             if (err) { 
 				return console.log(err) 
 			}
-            fs.writeFile(outFilePath, parseData(data), 'utf8', function (wErr) {
+            fs.writeFileSync(outFilePath, parseData(data), 'utf8', function (wErr) {
 				if(wErr) console.log(wErr);
             });
         });
