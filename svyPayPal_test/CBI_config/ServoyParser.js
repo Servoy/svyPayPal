@@ -12,7 +12,7 @@ if(args.length < 2) {
 }
 
 var WORKSPACE = args[0]	//'svyPayPal_instrumented';
-var TEMP_WORKSPACE = args[1]	//'temp_' + WORKSPACE;
+var TEMP_WORKSPACE = path.resolve(args[1])	//'temp_' + WORKSPACE;
 var WORKSPACE_PATH = path.resolve(WORKSPACE); // path.resolve(__dirname, '..\\..\\..\\..\\') 
 
 console.log('WORKSPACE_PATH: ' + WORKSPACE_PATH)
