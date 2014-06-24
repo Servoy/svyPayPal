@@ -27,8 +27,13 @@
 	  </exec>
 	  <exec executable="cmd">
 	    <arg value="/c"/>
+	    <arg value="set"/>
+	    <arg value="PATH=%PATH%;C:\Program Files\nodejs;"/>	
+	  </exec>
+	  <exec executable="cmd">
+	    <arg value="/c"/>
 	    <arg value="echo"/>
-	    <arg value="$Env:PATH"/>	
+	    <arg value="%PATH%"/>	
 	  </exec>
 	  <exec executable="cmd">
 	    <arg value="/c"/>
