@@ -38,7 +38,7 @@
 	</target>
 	
 	<target name="servoy_parse_instrumented_workspace" depends="instrument_workspace">
-	  <echo level="info" message="parsing Servoy code in instrumented workspace ${TEMP_INSTRUMENTED_WORKSPACE}. Generate result into INSTRUMENTED_WORKSPACE"/>
+	  <echo level="info" message="parsing Servoy code in instrumented workspace ${TEMP_INSTRUMENTED_WORKSPACE}. Generate result into ${INSTRUMENTED_WORKSPACE}"/>
 	  <exec executable="cmd">
 	    <arg value="/c"/>
 	    <!--<arg value="C:\Users\Administrator\AppData\Roaming\npm\istanbul.cmd"/-->
