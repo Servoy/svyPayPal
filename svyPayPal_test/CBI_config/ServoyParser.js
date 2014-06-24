@@ -13,8 +13,9 @@ if(args.length < 2) {
 
 var WORKSPACE = args[0]	//'svyPayPal_instrumented';
 var TEMP_WORKSPACE = args[1]	//'temp_' + WORKSPACE;
-var WORKSPACE_PATH = path.resolve(WORKSPACE);
+var WORKSPACE_PATH = path.resolve(__dirname, '..\\..\\') //path.resolve(WORKSPACE);
 
+console.log('WORKSPACE_PATH: ' + WORKSPACE_PATH)
 var workspaceFilesJS = [];		// the list of js files in workspace
 
 // 1 get all js files in directory.
