@@ -13,9 +13,8 @@
 	  <echo message="clean instrumented workspace"/>	
 	  <delete dir="${TEMP_INSTRUMENTED_WORKSPACE}"/>
 	  <delete dir="${INSTRUMENTED_WORKSPACE}"/>
-	  <mkdir dir="${TEMP_INSTRUMENTED_WORKSPACE}"/>		<!-- instrumented files -->
-	  <mkdir dir="${INSTRUMENTED_WORKSPACE}"/>			<!-- instrumented and parsed files -->
-	  <copydir src="${WORKSPACE}" dest="${INSTRUMENTED_WORKSPACE}" includes="**/*.js"/>
+	  <mkdir dir="${TEMP_INSTRUMENTED_WORKSPACE}"/>		<!-- instrumented files -->		
+	  <copydir src="${WORKSPACE}" dest="${INSTRUMENTED_WORKSPACE}" includes="**/*.js"/> <!-- instrumented and parsed files -->
 	</target>
 	
 	<!-- instrument all code from workspace into the instrumented workspace-->
@@ -34,7 +33,7 @@
 	    <arg value="${WORKSPACE}"/>
 	    <arg value="--output"/>
 	    <arg value="${TEMP_INSTRUMENTED_WORKSPACE}"/>	
-		<arg value="--preserve-comments">
+		<arg value="--preserve-comments"/>
 	  </exec>
 	</target>
 	
