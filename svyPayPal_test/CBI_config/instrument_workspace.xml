@@ -19,6 +19,7 @@
 	<!-- instrument all code from workspace into the instrumented workspace-->
 	<target name="instrument_workspace" depends="clean_instrumented_workspace">
 	  <echo level="info" message="istanbul ${WORKSPACE} --output ${INSTRUMENTED_WORKSPACE}"/>
+	  <!-- TODO copy WORKSPACE INTO INSTRUMENTED_WORKSPACE -->
 	  <exec executable="cmd">
 	    <arg value="/c"/>
 	    <arg value="mkdir"/>
@@ -26,7 +27,7 @@
 	  </exec>
 	  <exec executable="cmd">
 	    <arg value="/c"/>
-	    <arg value="istanbul"/>
+	    <arg value="C:\Users\Administrator\AppData\Roaming\npm\istanbul.cmd"/>
 	    <arg value="instrument"/>
 	    <arg value="${WORKSPACE}"/>
 	    <arg value="--output"/>
