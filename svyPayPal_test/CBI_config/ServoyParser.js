@@ -1,6 +1,7 @@
 var fs = require('fs');
 var readline = require('readline');
 var stream = require('stream');
+var path = require('path');
 var util = require('util');
 var Transform = stream.Transform || require('readable-stream').Transform;
 
