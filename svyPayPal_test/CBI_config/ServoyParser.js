@@ -98,7 +98,9 @@ function readWorkspaceJSFileList() {
 				return console.log(err) 
 			}
             fs.writeFileSync(outFilePath, parseData(data), 'utf8', function (wErr) {
-				if(wErr) console.log(wErr);
+				if(wErr) {
+					console.log(wErr);
+				}
             });
         });
 	}
@@ -113,6 +115,6 @@ function parseData(data) {
 	var parsedData = '/**\n * @properties={typeid:35,uuid:"' + generateUUID() + '"} \n */' + data
 	parsedData = parsedData.replace(LEFT_CONTENT, "(function (){" + LEFT_CONTENT)
 	parsedData = parsedData.replace(RIGHT_CONTENT, RIGHT_CONTENT + "})();") 
-
+	console.log(parsedData)
 	return parsedData;
 }
