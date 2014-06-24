@@ -42,7 +42,7 @@ function generateUUID() {
  * read all files in directory.
  */
 function getFilesRecursiveSync(dir, fileList, optionalFilterFunction) {
-	console.log('dir ' + dir + '  resolve ' + path.resolve(dir))
+	//console.log('dir ' + dir + '  resolve ' + path.resolve(dir))
 	if (!dir) {
 		console.log("Directory 'dir' is undefined or NULL")
 		return;
