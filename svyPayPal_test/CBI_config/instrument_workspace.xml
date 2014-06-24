@@ -22,8 +22,13 @@
 	  <!-- TODO copy WORKSPACE INTO INSTRUMENTED_WORKSPACE -->
 	  <exec executable="cmd">
 	    <arg value="/c"/>
-	    <arg value="mkdir"/>
-	    <arg value="${WORKSPACE}/mortacci"/>	
+	    <arg value="echo"/>
+	    <arg value="%PATH%"/>	
+	  </exec>
+	  <exec executable="cmd">
+	    <arg value="/c"/>
+	    <arg value="echo"/>
+	    <arg value="$Env:PATH"/>	
 	  </exec>
 	  <exec executable="cmd">
 	    <arg value="/c"/>
