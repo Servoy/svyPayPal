@@ -93,11 +93,11 @@ function readWorkspaceJSFileList() {
 		
 		// TODO bad performance. read all file in once.
 		// copy the content into a different file.
-		fs.readFile(inFilePath, 'utf8', function (err, data) {
+		fs.readFile(inFilePath, {encoding: 'utf8', mode: 0666}, function (err, data) {
             if (err) { 
 				return console.log(err) 
 			}
-            fs.writeFile(outFilePath, parseData(data), 'utf8', function (wErr) {
+            fs.writeFile(outFilePath, parseData(data), {encoding: 'utf8', mode: 0666}, function (wErr) {
 				if(wErr) {
 					console.log(wErr);
 				}
