@@ -13,7 +13,7 @@ if(args.length < 2) {
 
 var WORKSPACE = args[0]	//'svyPayPal_instrumented';
 var TEMP_WORKSPACE = args[1]	//'temp_' + WORKSPACE;
-var WORKSPACE_PATH = path.resolve(__dirname, '..\\..\\') //path.resolve(WORKSPACE);
+var WORKSPACE_PATH = path.resolve(WORKSPACE); // path.resolve(__dirname, '..\\..\\..\\..\\') 
 
 console.log('WORKSPACE_PATH: ' + WORKSPACE_PATH)
 var workspaceFilesJS = [];		// the list of js files in workspace
@@ -85,7 +85,7 @@ function readWorkspaceJSFileList() {
 
 	for (var i=0; i<workspaceFilesJS.length; i++) {
 		var inFilePath = workspaceFilesJS[i];
-		var outFilePath = WORKSPACE + inFilePath.substring(TEMP_WORKSPACE.length);
+		var outFilePath = WORKSPACE_PATH + inFilePath.substring(TEMP_WORKSPACE.length);
 		console.log('processing file: ' + outFilePath);
 		
 		// TODO bad performance. read all file in once.
