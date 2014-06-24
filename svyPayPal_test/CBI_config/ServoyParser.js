@@ -16,6 +16,7 @@ var TEMP_WORKSPACE = args[1]	//'temp_' + WORKSPACE;
 var WORKSPACE_PATH = path.resolve(WORKSPACE); // path.resolve(__dirname, '..\\..\\..\\..\\') 
 
 console.log('WORKSPACE_PATH: ' + WORKSPACE_PATH)
+console.log('dir ' + __dirname);
 var workspaceFilesJS = [];		// the list of js files in workspace
 
 // 1 get all js files in directory.
@@ -41,6 +42,7 @@ function generateUUID() {
  * read all files in directory.
  */
 function getFilesRecursiveSync(dir, fileList, optionalFilterFunction) {
+	console.log('dir ' + dir + '  resolve ' + path.resolve(dir))
 	if (!dir) {
 		console.log("Directory 'dir' is undefined or NULL")
 		return;
@@ -64,6 +66,7 @@ function getFilesRecursiveSync(dir, fileList, optionalFilterFunction) {
             if (optionalFilterFunction && optionalFilterFunction(filePath) !== true)	// filter .js files only
                 continue;
             fileList.push(filePath);	// push files into result object
+			console.log(filePath)
         }
     }
 }
