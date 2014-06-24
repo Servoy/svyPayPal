@@ -4,11 +4,17 @@ var stream = require('stream');
 var util = require('util');
 var Transform = stream.Transform || require('readable-stream').Transform;
 
-var workspaceFilesJS = [];		// the list of js files in workspace
-
 var args = process.argv.slice(2);
+if(args.length < 2) {
+	console.log('ServoyParser requires input directory and output directory as arguments.')
+	return;
+}
+
 var WORKSPACE = args[0]	//'svyPayPal_instrumented';
 var TEMP_WORKSPACE = args[1]	//'temp_' + WORKSPACE;
+var WORKSPACE_PATH = path.resolve(WORKSPACE);
+
+var workspaceFilesJS = [];		// the list of js files in workspace
 
 // 1 get all js files in directory.
 getFilesRecursiveSync(TEMP_WORKSPACE, workspaceFilesJS, isFileTypeJavascript);
@@ -16,7 +22,7 @@ getFilesRecursiveSync(TEMP_WORKSPACE, workspaceFilesJS, isFileTypeJavascript);
 // 2 edit all js files in directory.
 readWorkspaceJSFileList();
 
-/*
+/**
  * generate a random UUID. Note There is a possibility of fail.
  */
 function generateUUID() {
@@ -29,7 +35,7 @@ function generateUUID() {
     return uuid;
 };
 
-/*
+/**
  * read all files in directory.
  */
 function getFilesRecursiveSync(dir, fileList, optionalFilterFunction) {
@@ -46,7 +52,7 @@ function getFilesRecursiveSync(dir, fileList, optionalFilterFunction) {
         if (!files.hasOwnProperty(i)) {
 			continue;
 		}
-        var filePath = dir + '/' + files[i];
+        var filePath = dir + '\\' + files[i];
         if (fs.statSync(filePath).isDirectory()) {		// search files in directory
 		    if (filePath.substring(filePath.length-5, filePath.length) == '_test') {	// skip _test directories
 				continue;
@@ -60,7 +66,7 @@ function getFilesRecursiveSync(dir, fileList, optionalFilterFunction) {
     }
 }
 
-/* 
+/** 
  * returns true if the file in the specified path is a javascript file.
  */
 function isFileTypeJavascript(path) {
@@ -70,13 +76,14 @@ function isFileTypeJavascript(path) {
 		return false
 	}
 }
-
+/** 
+ * process all js files.
+ */
 function readWorkspaceJSFileList() {
 
 	for (var i=0; i<workspaceFilesJS.length; i++) {
 		var inFilePath = workspaceFilesJS[i];
-		// TODO replace temp_workspace with workspace. Split the / and replace.
-		var outFilePath = inFilePath.substring(5);
+		var outFilePath = WORKSPACE + inFilePath.substring(TEMP_WORKSPACE.length);
 		console.log('processing file: ' + outFilePath);
 		
 		// TODO bad performance. read all file in once.
@@ -92,6 +99,9 @@ function readWorkspaceJSFileList() {
 	}
 }
 
+/** 
+ * parse the content of the file. Return the parsed content.
+ */
 function parseData(data) { 
 	var LEFT_CONTENT = "if (!__cov_rAcfbE02Dq5l_Ztxrew2VQ.__coverage__) { __cov_rAcfbE02Dq5l_Ztxrew2VQ.__coverage__ = {}; }";
 	var RIGHT_CONTENT = "__cov_rAcfbE02Dq5l_Ztxrew2VQ.s['1']++;"
