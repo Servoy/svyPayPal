@@ -30,7 +30,7 @@
 
                 <arg value="-data" />
 				<!-- TODO use instrumented workspace -->
-                <arg value="${WORKSPACE}" />
+                <arg value="${INSTRUMENTED_WORKSPACE}" />
                 <arg value="-s" />
                 <arg value="@{solutionNames}" />
                 <arg value="-o" />

@@ -25,11 +25,6 @@
 	  <echo level="info" message="instrumenting workspace ${WORKSPACE} into temp workspace ${TEMP_INSTRUMENTED_WORKSPACE}"/>
 	  <exec executable="cmd">
 	    <arg value="/c"/>
-	    <arg value="echo"/>
-	    <arg value="%PATH%"/>	
-	  </exec>
-	  <exec executable="cmd">
-	    <arg value="/c"/>
 	    <!--<arg value="C:\Users\Administrator\AppData\Roaming\npm\istanbul.cmd"/-->
 		<arg value="istanbul"/>
 	    <arg value="instrument"/>
