@@ -115,6 +115,6 @@ function parseData(data) {
 	var parsedData = '/**\n * @properties={typeid:35,uuid:"' + generateUUID() + '"} \n */' + data
 	parsedData = parsedData.replace(LEFT_CONTENT, "(function (){" + LEFT_CONTENT)
 	parsedData = parsedData.replace(RIGHT_CONTENT, RIGHT_CONTENT + "})();") 
-	//console.log(parsedData)
+	console.log(parsedData)
 	return parsedData;
 }
