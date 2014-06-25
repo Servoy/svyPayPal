@@ -165,8 +165,7 @@ function parseData(data) {
 	var LEFT_CONTENT = "if (!__";
 	var RIGHT_CONTENT = ".s['1']++;"
 	var parsedData = '/**\n * @properties={typeid:35,uuid:"' + generateUUID() + '"} \n */' + data
-	parsedData = parsedData.replace(LEFT_CONTENT, '/**\n * @properties={typeid:35,uuid:"' + generateUUID() + '"} \n */\nvar istanbul_init = (function (){' + LEFT_CONTENT)
-	parsedData = parsedData.replace(RIGHT_CONTENT, RIGHT_CONTENT + "})();") 
-	console.log(parsedData)
+	parsedData = parsedData.replace(LEFT_CONTENT, '\n/**\n * @properties={typeid:35,uuid:"' + generateUUID() + '"} \n */\nvar istanbul_init = (function (){' + LEFT_CONTENT)
+	parsedData = parsedData.replace(RIGHT_CONTENT, RIGHT_CONTENT + "})();\n") 
 	return parsedData;
 }
