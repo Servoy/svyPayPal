@@ -14,7 +14,7 @@
 	  <delete dir="${TEMP_INSTRUMENTED_WORKSPACE}"/>
 	  <delete dir="${INSTRUMENTED_WORKSPACE}"/>
 	  <mkdir dir="${TEMP_INSTRUMENTED_WORKSPACE}"/>		<!-- instrumented files -->		
-	  <!--<copydir src="${WORKSPACE}" dest="${INSTRUMENTED_WORKSPACE}"/> <!-- instrumented and parsed files -->
+	  <!--<copydir src="${WORKSPACE}" dest="${INSTRUMENTED_WORKSPACE}"/>  instrumented and parsed files -->
 	  <copy todir="${INSTRUMENTED_WORKSPACE}">
 		<fileset dir="${WORKSPACE}">
 		</fileset>
