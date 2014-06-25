@@ -11,14 +11,13 @@
 	<!-- clean the instrumented workspace -->
 	<target name="clean_instrumented_workspace">
 	  <echo message="clean instrumented workspace"/>	
-	  <!--<delete dir="${TEMP_INSTRUMENTED_WORKSPACE}"/>-->
+	  <delete dir="${TEMP_INSTRUMENTED_WORKSPACE}"/>
 	  <delete dir="${INSTRUMENTED_WORKSPACE}"/>
-	  <!--<mkdir dir="${TEMP_INSTRUMENTED_WORKSPACE}"/>-->		<!-- instrumented files -->		
-	  <!--<copydir src="${WORKSPACE}" dest="${INSTRUMENTED_WORKSPACE}"/>  instrumented and parsed files -->
-	  <!--<copy todir="${INSTRUMENTED_WORKSPACE}">
+	  <mkdir dir="${TEMP_INSTRUMENTED_WORKSPACE}"/>		<!-- instrumented files -->		
+	  <copy todir="${INSTRUMENTED_WORKSPACE}"> <!--instrumented and parsed files -->
 		<fileset dir="${WORKSPACE}">
 		</fileset>
-	  </copy>-->
+	  </copy>
 	</target>
 	
 	<!-- instrument all code from workspace into the instrumented workspace-->
