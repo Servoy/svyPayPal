@@ -99,7 +99,7 @@ function readWorkspaceJSFileList() {
 			}
             fs.writeFile(outFilePath, parseData(data), {encoding: 'utf8', mode: 0666}, function (wErr) {
 				if(wErr) {
-					console.log(wErr);
+					console.log('ERROR IN WRITE FILE ' + wErr);
 				}
             });
         });
