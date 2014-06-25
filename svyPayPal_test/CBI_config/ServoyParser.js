@@ -81,9 +81,9 @@ function isFileTypeJavascript(path) {
 		return false
 	}
 }
-/** 
+/*
  * process all js files.
- */
+ *
 function readWorkspaceJSFileList() {
 
 	for (var i=0; i<workspaceFilesJS.length; i++) {
@@ -105,6 +105,58 @@ function readWorkspaceJSFileList() {
         });
 	}
 }
+*/
+
+function readWorkspaceJSFileList() {
+                if (!workspaceFilesJS.length) {
+                        return
+                }
+
+        //for (var i=0; i<workspaceFilesJS.length; i++) {
+                var inFilePath = workspaceFilesJS.shift();
+                var outFilePath = WORKSPACE_PATH + inFilePath.substring(TEMP_WORKSPACE.length) + '';
+                console.log('processing file: ' + outFilePath);
+				
+                        // TODO bad performance. read all file in once.
+                        // copy the content into a different file.
+                        fs.readFile(inFilePath, {flags:"r", encoding: 'utf8', mode: 0666}, function (err, data) {
+                                if (err) {
+                                        return console.log(err)
+                                }
+                                var parsedContent = parseData(data)
+                                console.log('read ' + inFilePath)
+								
+                                var buffer = new Buffer(parsedContent)
+                                console.log('buffer ' + buffer.length)
+
+                                fs.open(outFilePath, "w", "0666", function (err, fd) {
+                                        if (err) {
+                                                console.log(err);
+                                                return;
+                                        }
+                                        console.log('open ' + outFilePath)
+                                        fs.write(fd, buffer, 0, buffer.length,null, function (wErr) {
+                                                if(wErr) {
+                                                        console.log('ERROR WRITING THE FILE ' + wErr);
+                                                }
+                                                console.log('write ' + outFilePath)
+                                                fs.close(fd, function () {console.log("close " + outFilePath)})
+                                        });
+                                });
+
+                                //writeStream.end()
+//                              fs.writeFile(fd, parseData(data), {flags:"w", encoding: 'utf8',mode: 0666}, function (wErr) {
+//                                      if(wErr) {
+//                                              console.log('ERROR IN WRITE FILE ' + wErr);
+//                                      }
+//                              });
+
+								//read next file
+                                readWorkspaceJSFileList()
+
+                        });
+}
+
 
 /** 
  * parse the content of the file. Return the parsed content.
@@ -113,7 +165,7 @@ function parseData(data) {
 	var LEFT_CONTENT = "if (!__";
 	var RIGHT_CONTENT = ".s['1']++;"
 	var parsedData = '/**\n * @properties={typeid:35,uuid:"' + generateUUID() + '"} \n */' + data
-	parsedData = parsedData.replace(LEFT_CONTENT, "(function (){" + LEFT_CONTENT)
+	parsedData = parsedData.replace(LEFT_CONTENT, '/**\n * @properties={typeid:35,uuid:"' + generateUUID() + '"} \n */\nvar istanbul_init = (function (){' + LEFT_CONTENT)
 	parsedData = parsedData.replace(RIGHT_CONTENT, RIGHT_CONTENT + "})();") 
 	console.log(parsedData)
 	return parsedData;
