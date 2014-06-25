@@ -110,8 +110,8 @@ function readWorkspaceJSFileList() {
  * parse the content of the file. Return the parsed content.
  */
 function parseData(data) { 
-	var LEFT_CONTENT = "if (!__cov_rAcfbE02Dq5l_Ztxrew2VQ.__coverage__) { __cov_rAcfbE02Dq5l_Ztxrew2VQ.__coverage__ = {}; }";
-	var RIGHT_CONTENT = "__cov_rAcfbE02Dq5l_Ztxrew2VQ.s['1']++;"
+	var LEFT_CONTENT = "if (!__";
+	var RIGHT_CONTENT = ".s['1']++;"
 	var parsedData = '/**\n * @properties={typeid:35,uuid:"' + generateUUID() + '"} \n */' + data
 	parsedData = parsedData.replace(LEFT_CONTENT, "(function (){" + LEFT_CONTENT)
 	parsedData = parsedData.replace(RIGHT_CONTENT, RIGHT_CONTENT + "})();") 
