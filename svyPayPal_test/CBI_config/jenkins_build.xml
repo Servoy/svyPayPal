@@ -39,7 +39,8 @@
     
     <target name="escs_73" if="work.servoy.install.7.3.or.higher">
         <!-- starting with Servoy 7.3, multiple solutions can be exported with one call using a comma separated list of solution names as argument -->
-        <export-solution solutionNames="${smart_test_solutions}"/>
+        <echo level="info" message="exporting the smart client solutions"/>
+		<export-solution solutionNames="${smart_test_solutions}"/>
     </target>
     
     <target name="escs_lower" unless="work.servoy.install.7.3.or.higher">
