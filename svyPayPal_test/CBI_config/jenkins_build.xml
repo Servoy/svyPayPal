@@ -9,9 +9,9 @@
       </classpath>
     </taskdef>
        
-	<!-- TODO: import file to instrument the code -->
     <import file="instrument_workspace.xml"/>
 	<import file="export_and_test.xml"/>
+	
 
     <!-- Cleans the workspace preparing for a new build        -->
     <!-- Then                                                  -->
@@ -39,7 +39,6 @@
     
     <target name="escs_73" if="work.servoy.install.7.3.or.higher">
         <!-- starting with Servoy 7.3, multiple solutions can be exported with one call using a comma separated list of solution names as argument -->
-        <echo level="info" message="exporting the smart client solutions"/>
 		<export-solution solutionNames="${smart_test_solutions}"/>
     </target>
     
@@ -69,14 +68,11 @@
 		<antcall target="run_report_code_coverage"/>
 	</target>-->
 	
-		<!-- TODO create code coverage report after running mobile client tests-->
 	<target name="run_report_code_coverage">	  
-	  <echo level="info" message="anrRunner.dir = ${antRunner.dir}"/>
-	  
+	  <!-- create code coverage report after running mobile client tests-->
 	  <echo level="info" message="creating report coverage in folder ${REPORT_COVERAGE}"/>
 	  <exec executable="cmd">
 	    <arg value="/c"/>
-	    <!--<arg value="C:\Users\Administrator\AppData\Roaming\npm\istanbul.cmd"/-->
 		<arg value="istanbul"/>
 	    <arg value="report"/>
 		<arg value="--root"/>
