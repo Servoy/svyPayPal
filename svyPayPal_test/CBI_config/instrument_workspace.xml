@@ -6,7 +6,7 @@
     <property file="export_and_test_personal.properties"/>
     <property file="export_and_test.properties"/>
 
-	<target name="instrument_code" depends= "clean_instrumented_workspace, instrument_workspace, servoy_parse_instrumented_workspace, clean_instrument_code"/>
+	<target name="instrument_code" depends= "clean_instrumented_workspace, instrument_workspace, servoy_parse_instrumented_workspace, servoy_save_coverage_report_at_on_solution_close, clean_instrument_code"/>
 
 	<!-- clean the instrumented workspace -->
 	<target name="clean_instrumented_workspace">
@@ -46,6 +46,15 @@
 	  </exec>
 	</target>
 	
+	<target name="servoy_save_coverage_report_at_on_solution_close" depends="servoy_parse_instrumented_workspace">
+	  <echo level="info" message="include generated json report into an existing onCloseSolution. Save the report in the ${basedir}/report_coverage"/>
+	  <exec executable="cmd">
+	    <arg value="/c"/>
+		<arg value="node"/>
+	    <arg value="ServoyIstanbulReport.js"/>
+		<arg value="${REPORT_COVERAGE}"/>
+	  </exec>
+	</target>
 
 	
 		<!-- clean the instrumented workspace -->
