@@ -10,7 +10,8 @@ var DIR_REPORT_COVERAGE = 'report_coverage'
 
 var args = process.argv.slice(2);
 if (args.length == 1) {
-	DIR_REPORT_COVERAGE = path.resolve(args[1])
+	console.log(args[0])
+	DIR_REPORT_COVERAGE = path.resolve(args[0])
 } 
 
 console.log('DIR_TEST_SOLUTION ' + DIR_TEST_SOLUTION)
