@@ -30,7 +30,6 @@
                 <arg value="com.servoy.eclipse.exporter.solution.application" />
 
                 <arg value="-data" />
-				<!-- TODO use instrumented workspace -->
                 <arg value="${INSTRUMENTED_WORKSPACE}" />
                 <arg value="-s" />
                 <arg value="@{solutionNames}" />
