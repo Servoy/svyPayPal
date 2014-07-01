@@ -70,10 +70,7 @@
 	</target>-->
 	
 		<!-- TODO create code coverage report after running mobile client tests-->
-	<target name="run_report_code_coverage">
-	  <delete dir ="${REPORT_COVERAGE}"/>
-	  <mkdir dir="${REPORT_COVERAGE}"/>
-	  
+	<target name="run_report_code_coverage">	  
 	  <echo level="info" message="anrRunner.dir = ${antRunner.dir}"/>
 	  
 	  <echo level="info" message="creating report coverage in folder ${REPORT_COVERAGE}"/>
