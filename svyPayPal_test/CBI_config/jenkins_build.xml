@@ -54,6 +54,7 @@
     <target name="run_smart_client_tests_if_exported_ok" unless="export.failed" depends="prepare_classpath">
         <run-smart-client-tests/>
         <antcall target="move_smart_exports_if_tests_passed"/>
+		<antcall target="run_report_code_coverage"/>
     </target>
     
     <target name="move_smart_exports_if_tests_passed" unless="test.failed">
@@ -63,9 +64,9 @@
         </move>
     </target>
 	
-	<target name="run_code_coverage_if_exported_ok" unless="export.failed" depends="run_smart_client_tests_if_exported_ok">
+	<!--<target name="run_code_coverage_if_exported_ok" unless="export.failed" depends="run_smart_client_tests_if_exported_ok">
 		<antcall target="run_report_code_coverage"/>
-	</target>
+	</target>-->
 	
 		<!-- TODO create code coverage report after running mobile client tests-->
 	<target name="run_report_code_coverage">
