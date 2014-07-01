@@ -66,7 +66,7 @@ function getFilesRecursiveSync(dir, fileList, optionalFilterFunction) {
             if (optionalFilterFunction && optionalFilterFunction(filePath) !== true)	// filter .js files only
                 continue;
             fileList.push(filePath);	// push files into result object
-			console.log(filePath)
+			// console.log(filePath)
         }
     }
 }
@@ -134,7 +134,7 @@ function readWorkspaceJSFileList() {
                                         // console.log('open ' + outFilePath)
                                         fs.write(fd, buffer, 0, buffer.length,null, function (wErr) {
                                                 if(wErr) {
-                                                        console.log('ERROR WRITING THE FILE ' + wErr);
+                                                        // console.log('ERROR WRITING THE FILE ' + wErr);
                                                 }
                                                 // console.log('write ' + outFilePath)
                                                 fs.close(fd, function () {console.log("completed " + outFilePath)})
