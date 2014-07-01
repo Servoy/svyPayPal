@@ -46,7 +46,7 @@ function isFileTypeJavascript(path) {
 }
 
 function createScopeFile() {
-	var outFilePath = DIR_TEST_SOLUTION + '/tempScope_' + new Date().getTime() + '.js';
+	var outFilePath = DIR_TEST_SOLUTION + '/__onSolutionClose_test.js';
 	var onCloseMethodUUID = generateUUID();
 	
 	var solutionSettingsFilePath = DIR_TEST_SOLUTION + '/solution_settings.obj'
@@ -124,7 +124,7 @@ function wrapOnCloseMethod(uuid) {
 					\tlog.info('__coverage__ is not defined');\n\
 				}\n\
 				if (coverageExists) {\n\
-				\t	var filePath = 'report_coverage\\coverage.json';\n\
+				\t	var filePath = 'report_coverage\\\\coverage.json';\n\
 				\t	var jsFile = plugins.file.createFile(filePath)\n\
 				\t	if (!plugins.file.writeTXTFile(jsFile,JSON.stringify(__coverage__),'UTF-8','json')) {\n\
 				\t\t		log.error('Cannot write file ' + filePath);\n\
