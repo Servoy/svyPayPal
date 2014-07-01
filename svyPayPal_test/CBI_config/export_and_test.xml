@@ -14,7 +14,7 @@
         <sequential>
             <!-- now we are ready to start the workspace exporter -->
             <echo level="info" message="Using equinox launcher jar: ${equinox.launcher.jar.location_property}" />
-			<echo level="info" message="export from workspace ${INSTRUMENTED_WORKSPACE}"/>
+			<echo level="info" message="export from instrumented workspace ${INSTRUMENTED_WORKSPACE}"/>
 			
             <java   classname="org.eclipse.equinox.launcher.Main"
                     classpathref="equinox.launcher.jar.location"
