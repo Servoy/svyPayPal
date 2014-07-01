@@ -99,11 +99,23 @@ function setup() {
  */
 function onSolutionClose(force) {
 	// write coverage json object.
-	if (__coverage__) {
+	var coverageExists = false;
+	try {
+		if (__coverage__) {
+			coverageExists = true;
+		}
+	} catch (e) {
+		
+	}
+	
+
+	if (coverageExists) {
 		// TODO change file path
 		var filePath = "C://Program Files (x86)//Jenkins/jobs/svyPayPal/report_coverage/coverage.json"
 		var jsFile = plugins.file.createFile(filePath)
-		plugins.file.writeFile(jsFile,JSON.stringify(__coverage__),'json')
+		if (!plugins.file.writeTXTFile(jsFile,JSON.stringify(__coverage__),'UTF-8','json')) {
+			throw new scopes.svyIO.IOException('Cannot write file ' + filePath)
+		}
 	}
 	return true
 }
