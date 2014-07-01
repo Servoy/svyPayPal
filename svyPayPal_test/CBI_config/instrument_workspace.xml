@@ -48,7 +48,7 @@
 	</target>
 	
 	<!-- TODO create code coverage report after running mobile client tests-->
-	<target name="report_code_coverage" depends="run_mobile_client_tests_if_exported_ok">
+	<target name="report_code_coverage" unless="export.failed" depends="run_mobile_client_tests_if_exported_ok">
 	  <delete dir ="${REPORT_COVERAGE}"/>
 	  <mkdir dir="${REPORT_COVERAGE}"/>
 	  
