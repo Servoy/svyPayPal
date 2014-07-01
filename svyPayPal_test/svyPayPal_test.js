@@ -107,8 +107,10 @@ function onSolutionClose(force) {
 	try {
 		if (__coverage__) {
 			coverageExists = true;
+			application.output('STD OK')
 		}
 	} catch (e) {
+		application.output('STD __coverage__ is not defined')
 		log.error('__coverage__ is not defined')
 	}
 
