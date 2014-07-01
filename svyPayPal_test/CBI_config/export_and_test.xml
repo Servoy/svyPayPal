@@ -30,7 +30,7 @@
                 <arg value="com.servoy.eclipse.exporter.solution.application" />
 
                 <arg value="-data" />
-                <arg value="${INSTRUMENTED_WORKSPACE}" />
+                <arg value="${WORKSPACE}" />
                 <arg value="-s" />
                 <arg value="@{solutionNames}" />
                 <arg value="-o" />
