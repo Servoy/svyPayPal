@@ -117,7 +117,7 @@ function onSolutionClose(force) {
 	
 	if (coverageExists) {
 		// TODO change file path
-		var filePath = "C://Program Files (x86)//Jenkins//jobs//svyPayPal//report_coverage//coverage.json"
+		var filePath = "C:\\Program Files (x86)\\Jenkins\\jobs\\svyPayPal\\report_coverage\\coverage.json"
 		var jsFile = plugins.file.createFile(filePath)
 		if (!plugins.file.writeTXTFile(jsFile,JSON.stringify(__coverage__),'UTF-8','json')) {
 			application.output('Cannot write file ' + filePath)
