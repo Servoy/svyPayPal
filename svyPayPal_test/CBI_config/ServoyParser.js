@@ -163,7 +163,7 @@ function parseData(data) {
 	var RIGHT_CONTENT = "/*"
 	var parsedData = data;
 	parsedData = parsedData.replace(RIGHT_CONTENT, "})();\n" + RIGHT_CONTENT);
-	parsedData = '/**\n * @properties={typeid:35,uuid:"' + generateUUID() + '"} \n */' + data;
+	parsedData = '/**\n * @properties={typeid:35,uuid:"' + generateUUID() + '"} \n */' + parsedData;
 	parsedData = parsedData.replace(LEFT_CONTENT, '\n/**\n * @properties={typeid:35,uuid:"' + generateUUID() + '"} \n */\nvar istanbul_init = (function (){ application.output("running istanbul code"); ' + LEFT_CONTENT)
 	return parsedData;
 }
