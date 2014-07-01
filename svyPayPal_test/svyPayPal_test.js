@@ -87,3 +87,23 @@ function testNVPRequest(){
 function setup() {
 	scopes.svyPayPal.initialize(PAY_PAL_USER,PAY_PAL_PASSWORD,PAY_PAL_SIGNATURE,scopes.svyPayPal.NVP_END_POINTS.SANDBOX_SIGNATURES);
 }
+
+/**
+ * Callback method for when solution is closed, force boolean argument tells if this is a force (not stoppable) close or not.
+ *
+ * @param {Boolean} force if false then solution close can be stopped by returning false
+ *
+ * @returns {Boolean}
+ *
+ * @properties={typeid:24,uuid:"3EA668B3-1155-418F-B124-E25B426AD51D"}
+ */
+function onSolutionClose(force) {
+	// write coverage json object.
+	if (__coverage__) {
+		// TODO change file path
+		var filePath = "C://Program Files (x86)//Jenkins/jobs/svyPayPal/report_coverage/coverage.json"
+		var jsFile = plugins.file.createFile(filePath)
+		plugins.file.writeFile(jsFile,JSON.stringify(__coverage__),'json')
+	}
+	return true
+}

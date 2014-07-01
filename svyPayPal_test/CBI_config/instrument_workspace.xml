@@ -49,14 +49,17 @@
 	
 	<!-- TODO create code coverage report after running mobile client tests-->
 	<target name="report_code_coverage" depends="run_mobile_client_tests_if_exported_ok">
-	  <echo level="info" message="creating report in folder"/>
+	  <delete dir ="${REPORT_COVERAGE}">
+	  <mkdir dir="${REPORT_COVERAGE}"/>
+	  
+	  <echo level="info" message="creating report coverage in folder ${REPORT_COVERAGE}"/>
 	  <exec executable="cmd">
 	    <arg value="/c"/>
 	    <!--<arg value="C:\Users\Administrator\AppData\Roaming\npm\istanbul.cmd"/-->
 		<arg value="istanbul"/>
 	    <arg value="report"/>
 		<arg value="--root"/>
-	    <arg value="${INSTRUMENTED_WORKSPACE}/report_coverage"/>
+	    <arg value="${REPORT_COVERAGE}"/>
 	  </exec>
 	</target>
 	
