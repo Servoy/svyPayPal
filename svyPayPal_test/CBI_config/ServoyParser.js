@@ -112,7 +112,6 @@ function readWorkspaceJSFileList() {
                         return
                 }
 
-        //for (var i=0; i<workspaceFilesJS.length; i++) {
                 var inFilePath = workspaceFilesJS.shift();
                 var outFilePath = WORKSPACE_PATH + inFilePath.substring(TEMP_WORKSPACE.length) + '';
                 console.log('processing file: ' + outFilePath);
@@ -124,7 +123,7 @@ function readWorkspaceJSFileList() {
                                         return console.log(err)
                                 }
                                 var parsedContent = parseData(data)
-                                console.log('read ' + inFilePath)
+                                // console.log('read ' + inFilePath)
 								
                                 var buffer = new Buffer(parsedContent)
                                 fs.open(outFilePath, "w", "0666", function (err, fd) {
