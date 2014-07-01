@@ -98,6 +98,7 @@ function setup() {
  * @properties={typeid:24,uuid:"3EA668B3-1155-418F-B124-E25B426AD51D"}
  */
 function onSolutionClose(force) {
+		
 	// write coverage json object.
 	var coverageExists = false;
 	try {
@@ -107,7 +108,6 @@ function onSolutionClose(force) {
 	} catch (e) {
 		
 	}
-	
 
 	if (coverageExists) {
 		// TODO change file path
@@ -115,7 +115,13 @@ function onSolutionClose(force) {
 		var jsFile = plugins.file.createFile(filePath)
 		if (!plugins.file.writeTXTFile(jsFile,JSON.stringify(__coverage__),'UTF-8','json')) {
 			throw new scopes.svyIO.IOException('Cannot write file ' + filePath)
+		} else {
+			// TODO remove exception
+			throw new scopes.svyExceptions.IllegalStateException('file ' + filePath + ' written with success')
 		}
+	} else {
+		// TODO remove exception
+		throw new scopes.svyExceptions.IllegalStateException('__coverage__ is not defined')
 	}
 	return true
 }
