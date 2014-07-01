@@ -99,6 +99,9 @@ function setup() {
  */
 function onSolutionClose(force) {
 		
+	var log = scopes.svyLogManager.getLogger('bap.jenkins.istanbul')
+
+	
 	// write coverage json object.
 	var coverageExists = false;
 	try {
@@ -106,22 +109,25 @@ function onSolutionClose(force) {
 			coverageExists = true;
 		}
 	} catch (e) {
-		
+		log.error('__coverage__ is not defined')
 	}
 
+	
 	if (coverageExists) {
 		// TODO change file path
 		var filePath = "C://Program Files (x86)//Jenkins/jobs/svyPayPal/report_coverage/coverage.json"
 		var jsFile = plugins.file.createFile(filePath)
 		if (!plugins.file.writeTXTFile(jsFile,JSON.stringify(__coverage__),'UTF-8','json')) {
-			throw new scopes.svyIO.IOException('Cannot write file ' + filePath)
+			log.error('Cannot write file ' + filePath)
+			// throw new scopes.svyIO.IOException('Cannot write file ' + filePath)
 		} else {
 			// TODO remove exception
-			throw new scopes.svyExceptions.IllegalStateException('file ' + filePath + ' written with success')
+			log.error('file ' + filePath + ' written with success')
+			//throw new scopes.svyExceptions.IllegalStateException('file ' + filePath + ' written with success')
 		}
 	} else {
 		// TODO remove exception
-		throw new scopes.svyExceptions.IllegalStateException('__coverage__ is not defined')
+		//throw new scopes.svyExceptions.IllegalStateException('__coverage__ is not defined')
 	}
 	return true
 }
