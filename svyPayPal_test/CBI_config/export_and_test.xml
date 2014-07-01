@@ -14,8 +14,26 @@
         <sequential>
             <!-- now we are ready to start the workspace exporter -->
             <echo level="info" message="Using equinox launcher jar: ${equinox.launcher.jar.location_property}" />
-
 			<echo level="info" message="export from workspace ${INSTRUMENTED_WORKSPACE}"/>
+			
+			<java   classname="org.eclipse.equinox.launcher.Main"
+                    classpathref="equinox.launcher.jar.location"
+                    failonerror="#{failOnError}"
+                    resultproperty="export.result"
+                    fork="true">
+                <jvmarg value="-Xms40m" />
+                <jvmarg value="-Xmx512m" />
+                <jvmarg value="-XX:MaxPermSize=256M" />
+                <jvmarg value="-Dosgi.configuration.cascaded=false" />
+
+                <arg value="-application" />
+                <arg value="com.servoy.eclipse.exporter.solution.application" />
+
+                <arg value="export" />
+                <!-- add here any of the optional arguments supported by the exporter; see 'export -help' for more info; for example: -->
+                <arg value="-help" />
+            </java>
+			
             <java   classname="org.eclipse.equinox.launcher.Main"
                     classpathref="equinox.launcher.jar.location"
                     failonerror="#{failOnError}"
