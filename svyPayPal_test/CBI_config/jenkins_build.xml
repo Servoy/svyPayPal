@@ -83,7 +83,7 @@
 	    <arg value="/c"/>
 		<arg value="istanbul"/>
 	    <arg value="report"/>
-		<arg value="cobertura">
+		<arg value="cobertura"/>
 		<arg value="--root"/>
 	    <arg value="${REPORT_COVERAGE}"/>
 	  </exec>
