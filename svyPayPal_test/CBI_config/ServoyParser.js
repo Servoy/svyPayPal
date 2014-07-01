@@ -127,20 +127,18 @@ function readWorkspaceJSFileList() {
                                 console.log('read ' + inFilePath)
 								
                                 var buffer = new Buffer(parsedContent)
-                                console.log('buffer ' + buffer.length)
-
                                 fs.open(outFilePath, "w", "0666", function (err, fd) {
                                         if (err) {
                                                 console.log(err);
                                                 return;
                                         }
-                                        console.log('open ' + outFilePath)
+                                        // console.log('open ' + outFilePath)
                                         fs.write(fd, buffer, 0, buffer.length,null, function (wErr) {
                                                 if(wErr) {
                                                         console.log('ERROR WRITING THE FILE ' + wErr);
                                                 }
-                                                console.log('write ' + outFilePath)
-                                                fs.close(fd, function () {console.log("close " + outFilePath)})
+                                                // console.log('write ' + outFilePath)
+                                                fs.close(fd, function () {console.log("completed " + outFilePath)})
                                         });
                                 });
 
