@@ -47,21 +47,7 @@
 	  </exec>
 	</target>
 	
-	<!-- TODO create code coverage report after running mobile client tests-->
-	<target name="run_report_code_coverage">
-	  <delete dir ="${REPORT_COVERAGE}"/>
-	  <mkdir dir="${REPORT_COVERAGE}"/>
-	  
-	  <echo level="info" message="creating report coverage in folder ${REPORT_COVERAGE}"/>
-	  <exec executable="cmd">
-	    <arg value="/c"/>
-	    <!--<arg value="C:\Users\Administrator\AppData\Roaming\npm\istanbul.cmd"/-->
-		<arg value="istanbul"/>
-	    <arg value="report"/>
-		<arg value="--root"/>
-	    <arg value="${REPORT_COVERAGE}"/>
-	  </exec>
-	</target>
+
 	
 		<!-- clean the instrumented workspace -->
 	<target name="clean_instrument_code" depends="instrument_workspace, servoy_parse_instrumented_workspace">
