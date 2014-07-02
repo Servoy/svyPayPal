@@ -114,6 +114,8 @@ function createScopeFile() {
 }
 
 function wrapOnCloseMethod(uuid) {
+	// var dir = resolveWindowsPath(DIR_REPORT_COVERAGE)
+	
 	var body = "var log = scopes.svyLogManager.getLogger('bap.jenkins.istanbul');\n\
 				var coverageExists = false;\n\
 				try {\n\
@@ -148,6 +150,17 @@ function onSolutionClose(force) {\n\
 } "
 						
 	return wrappedMethod;
+}
+
+
+function resolveWindowsPath(dir) {
+	if(dir.search('\\')==-1) {
+		console.log('path resolved ' + dir)
+		return dir;
+	} else {
+		dir = dir.replace('\\','\\' +'\\')
+	}
+	return resolveWindowsPath(dir)
 }
 
 
