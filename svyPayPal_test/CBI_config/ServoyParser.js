@@ -7,8 +7,8 @@ var Transform = stream.Transform || require('readable-stream').Transform;
 
 var args = process.argv.slice(2);
 if(args.length < 2) {
-	console.log('ServoyParser requires input directory and output directory as arguments.')
-	return;
+	// console.log('ServoyParser requires input directory and output directory as arguments.')
+	throw new Error('ServoyParser requires input directory and output directory as arguments.')
 }
 
 var WORKSPACE = args[0]	//'svyPayPal_instrumented';
@@ -120,21 +120,30 @@ function readWorkspaceJSFileList() {
                         // copy the content into a different file.
                         fs.readFile(inFilePath, {flags:"r", encoding: 'utf8', mode: 0666}, function (err, data) {
                                 if (err) {
-                                        return console.log(err)
+                                        throw new Error(err)
+										//return console.log(err)
                                 }
-                                var parsedContent = parseData(data)
-                                // console.log('read ' + inFilePath)
-								
-                                var buffer = new Buffer(parsedContent)
-                                fs.open(outFilePath, "w", "0666", function (err, fd) {
-                                        if (err) {
-                                                console.log(err);
-                                                return;
+								// console.log('read ' + inFilePath)								
+								var parsedContent;
+								var buffer;
+
+								try {
+									parsedContent = parseData(data)
+									buffer = new Buffer(parsedContent)
+								} catch (e) {
+									throw new Error('The JS file ' + inFilePath + ' is not instrumented.')
+								}
+                                fs.open(outFilePath, "w", "0666", function (oerr, fd) {
+                                        if (oerr) {
+										        throw new Error(oerr)
+                                                //console.log(err);
+                                                //return;
                                         }
                                         // console.log('open ' + outFilePath)
-                                        fs.write(fd, buffer, 0, buffer.length,null, function (wErr) {
-                                                if(wErr) {
-                                                        // console.log('ERROR WRITING THE FILE ' + wErr);
+                                        fs.write(fd, buffer, 0, buffer.length,null, function (werr) {
+                                                if(werr) {
+													throw new Error(werr)
+                                                    // console.log('ERROR WRITING THE FILE ' + wErr);
                                                 }
                                                 // console.log('write ' + outFilePath)
                                                 fs.close(fd, function () {console.log("completed " + outFilePath)})
@@ -167,6 +176,9 @@ function parseData(data) {
 		parsedData = '/**\n * @properties={typeid:35,uuid:"' + generateUUID() + '"} \n */' + parsedData;
 		parsedData = parsedData.replace(LEFT_CONTENT, '\n/**\n * @properties={typeid:35,uuid:"' + generateUUID() + '"} \n */\nvar istanbul_init = (function (){ application.output("running istanbul code"); ' + LEFT_CONTENT)
 		return parsedData
+	} else {
+		// console.log('ServoyParser requires input directory and output directory as arguments.')
+		throw new Error('File not instrumented')
 	}
 	return data;
 }
