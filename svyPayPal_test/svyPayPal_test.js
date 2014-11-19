@@ -1,28 +1,27 @@
-
 /**
  * @type {String}
- * @private 
+ * @private
  * @properties={typeid:35,uuid:"11F7DA77-BC25-481E-B15F-DCF59B371C59"}
  */
 var PAY_PAL_USER = 'paypro_1351879757_biz_api1.servoy.com';
 /**
  * @type {String}
- * @private 
+ * @private
  * @properties={typeid:35,uuid:"5C66FC66-E094-4F8B-A983-FBDF5A843239"}
  */
 var PAY_PAL_PASSWORD = '1351879798';
 /**
  * @type {String}
- * @private 
+ * @private
  * @properties={typeid:35,uuid:"49516429-76AB-4A88-B830-7E7290EE3622"}
  */
 var PAY_PAL_SIGNATURE = 'AQhmRD9Ow0.uJR-UkN9ai5Ks-.ZvAqc7h-T7OSm0h5HNdo8z80W9VTrs'
-	
+
 /**
  * @properties={typeid:24,uuid:"55B9F550-C1D2-4356-9208-7BFF324C8D5C"}
  */
 function testDoPayment() {
-	
+
 	var amount = .10;
 	var creditCardType = scopes.svyPayPal.CREDIT_CARD_TYPES.VISA;
 	var account = '4147768078062740';
@@ -35,8 +34,8 @@ function testDoPayment() {
 	var state = 'PA';
 	var zip = '16801';
 	var countryCode = 'US';
-	
-	scopes.svyPayPal.doDirectPayment(onPaymentCallback,amount,firstName,lastName,street,city,state,zip,countryCode,creditCardType,account,expirationDate,cvv2);
+
+	scopes.svyPayPal.doDirectPayment(onPaymentCallback, amount, firstName, lastName, street, city, state, zip, countryCode, creditCardType, account, expirationDate, cvv2);
 }
 
 /**
@@ -44,7 +43,7 @@ function testDoPayment() {
  *
  * @properties={typeid:24,uuid:"9FD4C5DD-9C12-4798-AB9E-F3BE992E9B1A"}
  */
-function onPaymentCallback(res){
+function onPaymentCallback(res) {
 	jsunit.assertTrue(res.ack == scopes.svyPayPal.ACK_CODES.SUCCESS || res.ack == scopes.svyPayPal.ACK_CODES.FAILURE);
 }
 
@@ -53,16 +52,16 @@ function onPaymentCallback(res){
  * @properties={typeid:24,uuid:"1A673770-1B19-4432-975F-E713F2A98801"}
  */
 function testInitialize() {
-	jsunit.assertEquals(scopes.svyPayPal.getUser(),PAY_PAL_USER);
-	jsunit.assertEquals(scopes.svyPayPal.getPassword(),PAY_PAL_PASSWORD);
-	jsunit.assertEquals(scopes.svyPayPal.getSignature(),PAY_PAL_SIGNATURE);
-	jsunit.assertEquals(scopes.svyPayPal.getNVPEndpoint(),scopes.svyPayPal.NVP_END_POINTS.SANDBOX_SIGNATURES);
+	jsunit.assertEquals(scopes.svyPayPal.getUser(), PAY_PAL_USER);
+	jsunit.assertEquals(scopes.svyPayPal.getPassword(), PAY_PAL_PASSWORD);
+	jsunit.assertEquals(scopes.svyPayPal.getSignature(), PAY_PAL_SIGNATURE);
+	jsunit.assertEquals(scopes.svyPayPal.getNVPEndpoint(), scopes.svyPayPal.NVP_END_POINTS.SANDBOX_SIGNATURES);
 }
 
 /**
  * @properties={typeid:24,uuid:"1233CB1B-0F49-4D0B-B184-9229961E2E58"}
  */
-function testNVPRequest(){
+function testNVPRequest() {
 	var req = new scopes.svyPayPal.NVPRequest();
 	req.amount = .10;
 	req.creditCardType = scopes.svyPayPal.CREDIT_CARD_TYPES.VISA;
@@ -76,7 +75,7 @@ function testNVPRequest(){
 	req.state = 'PA';
 	req.zip = '16801';
 	req.countryCode = 'US';
-	req.execute(scopes.svyPayPal.NVP_END_POINTS.SANDBOX_SIGNATURES,onPaymentCallback);
+	req.execute(scopes.svyPayPal.NVP_END_POINTS.SANDBOX_SIGNATURES, onPaymentCallback);
 }
 
 /**
@@ -85,7 +84,17 @@ function testNVPRequest(){
  * @properties={typeid:24,uuid:"8E2DD91B-BED5-4E10-A72E-DA7BCFCC8083"}
  */
 function setup() {
-	scopes.svyPayPal.initialize(PAY_PAL_USER,PAY_PAL_PASSWORD,PAY_PAL_SIGNATURE,scopes.svyPayPal.NVP_END_POINTS.SANDBOX_SIGNATURES);
+
+	// force lazy loading of all files for a complete coverage report
+	var log = scopes.svyLogManager.getLogger('bap.paypal.jenkins.istanbul');
+	try {
+		scopes.istanbul_scope.initIstanbul();
+	} catch (e) {
+		log.info('cannot init istanbul_scope')
+		log.info(e)
+	}
+
+	scopes.svyPayPal.initialize(PAY_PAL_USER, PAY_PAL_PASSWORD, PAY_PAL_SIGNATURE, scopes.svyPayPal.NVP_END_POINTS.SANDBOX_SIGNATURES);
 }
 
 /**
@@ -98,10 +107,10 @@ function setup() {
  * @properties={typeid:24,uuid:"3EA668B3-1155-418F-B124-E25B426AD51D"}
  */
 function onSolutionClose(force) {
-		
+
+	// write coverage json object to generate coverage reports on Jenkins.
 	var log = scopes.svyLogManager.getLogger('bap.paypal.jenkins.istanbul');
 
-	// write coverage json object.
 	var coverageExists = false;
 	try {
 		if (__coverage__) {
@@ -110,17 +119,17 @@ function onSolutionClose(force) {
 	} catch (e) {
 		log.info('__coverage__ is not defined')
 	}
-	
+
+	// write the coverage result on file
 	if (coverageExists) {
-		// TODO change file path
+		// TODO file path is hardcoded
 		var filePath = "C:\\Program Files (x86)\\Jenkins\\jobs\\svyPayPal\\workspace\\JenkinsConfig\\svyJenkinsConfig\\CBI_config\\report_coverage\\coverage.json"
 		var jsFile = plugins.file.createFile(filePath)
-		if (!plugins.file.writeTXTFile(jsFile,JSON.stringify(__coverage__),'UTF-8','json')) {
+		if (!plugins.file.writeTXTFile(jsFile, JSON.stringify(__coverage__), 'UTF-8', 'json')) {
 			log.error('Cannot write file ' + filePath)
-			// throw new scopes.svyIO.IOException('Cannot write file ' + filePath)
 		} else {
 			log.info('coverage file ' + filePath + ' written with success')
 		}
-	} 
+	}
 	return true
 }
