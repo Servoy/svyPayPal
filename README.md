@@ -36,4 +36,4 @@ Eager to fix a bug or introduce a new feature? Clone the repository and issue a 
 
 License
 -------
-svyPayPal is licensed under LGPL
+svyPayPal is licensed under MIT
